@@ -1,4 +1,4 @@
-package pl.postgresqljdbc;
+package app;
 
 import java.sql.*;
 
