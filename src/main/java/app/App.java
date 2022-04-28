@@ -46,8 +46,10 @@ public class App extends Application {
         try(Connection conn = app.connect();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SQLquery)) {
-            TwoDimensionalBarChart twoDimensionalBarChart = new TwoDimensionalBarChart(rs,1,2);
-            twoDimensionalBarChart.graphChart(stage);
+            TwoDimensionalBarChart twoDimensionalBarChartFirst = new TwoDimensionalBarChart(rs,1,2);
+            TwoDimensionalBarChart twoDimensionalBarChartSecond = new TwoDimensionalBarChart(rs,1,3);
+            //twoDimensionalBarChartFirst.graphChart(stage);
+            twoDimensionalBarChartFirst.combine(twoDimensionalBarChartFirst).graphChart(stage);
         } catch(SQLException e){
             System.out.println(e.getMessage());
         }
