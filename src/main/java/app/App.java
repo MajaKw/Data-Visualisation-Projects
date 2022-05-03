@@ -1,10 +1,13 @@
 package app;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import java.sql.*;
 
-public class App {
-    private final String url = "jdbc:postgresql://localhost:5432/postgres"; // jdbc:postgresql://server-name:server-port/database-name
-    private final String user = "postgres";
+public class App extends Application {
+    private final String url = "jdbc:postgresql://localhost:5432/"; // jdbc:postgresql://server-name:server-port/database-name
+    private final String user = "";
     private final String password = "";
 
     public Connection connect() {
@@ -19,7 +22,7 @@ public class App {
         return conn;
     }
 
-    public static void printJans(ResultSet rs) throws SQLException {
+    /*public static void printJans(ResultSet rs) throws SQLException {
         while(rs.next()){
             System.out.println(rs.getString("owner_id") + " " +
                     rs.getString("adres") + " " +
@@ -27,18 +30,26 @@ public class App {
                     rs.getString("income")
             );
         }
-    }
+    }*/
 
     public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
         App app = new App();
 //        app.connect();
         String SQLquery = "SELECT *" +
-                "FROM owner_house JOIN houses USING (house_id) JOIN owners USING (owner_id) " +
-                "WHERE name='JAN'";
+                "FROM azerbaijan " +
+                "ORDER BY 1";
         try(Connection conn = app.connect();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(SQLquery)) {
-            printJans(rs);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(SQLquery)) {
+            TwoDimensionalBarChart twoDimensionalBarChartFirst = new TwoDimensionalBarChart(rs,1,2);
+            TwoDimensionalBarChart twoDimensionalBarChartSecond = new TwoDimensionalBarChart(rs,1,3);
+            //twoDimensionalBarChartFirst.graphChart(stage);
+            twoDimensionalBarChartFirst.combine(twoDimensionalBarChartFirst).graphChart(stage);
         } catch(SQLException e){
             System.out.println(e.getMessage());
         }
