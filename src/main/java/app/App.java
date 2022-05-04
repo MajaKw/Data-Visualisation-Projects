@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class App extends Application {
     private final String url = "jdbc:postgresql://localhost:5432/"; // jdbc:postgresql://server-name:server-port/database-name
-    private final String user = "";
+    private final String user = "postgres";
     private final String password = "";
 
     public Connection connect() {
