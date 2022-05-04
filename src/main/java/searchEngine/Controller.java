@@ -34,7 +34,7 @@ public class Controller implements Initializable {
 
     public Controller() throws IOException, ParseException {
         System.out.println("---------------creation----------------");
-        filePath = "/home/maisho/demo1/src/main/resources/searchEngine/countries.json";
+        filePath = "/Users/beniu/Desktop/Studia/TCS/obiektowe/Data-Visualisation-Project/src/main/resources/searchEngine/countries.json" ;
         words = new ArrayList<>();
         this.obj = new JSONParser().parse(new FileReader(filePath));
         this.jo = (JSONArray) obj;

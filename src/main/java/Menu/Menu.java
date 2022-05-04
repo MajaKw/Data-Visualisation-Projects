@@ -1,5 +1,6 @@
 package Menu;
 
+import app.App;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,12 +13,37 @@ import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import searchEngine.DiagramWindow;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Menu extends Application {
     Stage window;
 
     public static void main(String[] args) {
+        // filling countries.json with entries of the format table_name.column_name
+        Connection conn = App.connect();
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/beniu/Desktop/Studia/TCS/obiektowe/Data-Visualisation-Project/src/main/resources/searchEngine/countries.json"));
+            String SQLquery = "SELECT table_name, column_name " +
+                    "FROM information_schema.columns " +
+                    "WHERE table_schema NOT IN ('pg_catalog', 'information_schema')";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(SQLquery);
+            writer.write("[\n");
+            while(rs.next()) {
+                writer.append('{' + "\"name\": \"" + rs.getString("table_name") + '.' + rs.getString("column_name") + "\"}");
+                if(!rs.isLast()) writer.append(",\n");
+            }
+            writer.append("\n]");
+            writer.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         launch(args);
     }
 

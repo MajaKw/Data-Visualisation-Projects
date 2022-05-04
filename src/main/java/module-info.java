@@ -1,11 +1,13 @@
-module changeThisModuleName {
+module searchEngine {
     requires javafx.controls;
     requires javafx.fxml;
-
     requires org.controlsfx.controls;
-    requires java.desktop;
+    requires json.simple;
     requires java.sql;
+    requires java.desktop;
 
-    opens app to javafx.fxml;
-    exports app;
+    opens Menu to javafx.fxml;
+    opens searchEngine to javafx.fxml;
+    exports Menu;
+    exports searchEngine;
 }
