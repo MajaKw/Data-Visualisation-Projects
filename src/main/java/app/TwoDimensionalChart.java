@@ -1,5 +1,7 @@
 package app;
 
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
@@ -28,8 +30,32 @@ public abstract class TwoDimensionalChart implements Chart{
         return indexOfYAxis;
     }
 
-    abstract XYChart.Series[] createSeries();
+    public XYChart.Series[] createSeries() {
+        ResultSet resultSet = getResultSet();
+        int indexOfXAxis = getIndexOfXAxis();
+        int indexOfYAxis = getIndexOfYAxis();
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        try {
+            xAxis.setLabel(resultSet.getMetaData().getCatalogName(indexOfXAxis));
+            yAxis.setLabel(resultSet.getMetaData().getCatalogName(indexOfYAxis));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        XYChart.Series[] series = new XYChart.Series[1];
+        series[0] = new XYChart.Series();
 
+        try {
+            while(resultSet.next()){
+                series[0].getData().add(new XYChart.Data(resultSet.getString(indexOfXAxis), resultSet.getDouble(indexOfYAxis)));
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return series;
+    }
     public abstract void graphChart(Stage stage, XYChart.Series[] extraSeries);
     //TODO
     TwoDimensionalChart combine(final TwoDimensionalChart secondChart) throws NoCompatibleDataException{
@@ -41,7 +67,7 @@ public abstract class TwoDimensionalChart implements Chart{
             final TwoDimensionalChart first = firstChart;
             final TwoDimensionalChart second = secondChart;
             @Override
-            XYChart.Series[] createSeries() {
+            public XYChart.Series[] createSeries() {
                 XYChart.Series[] firstSeries = first.createSeries();
                 XYChart.Series[] secondSeries = second.createSeries();
                 XYChart.Series[] series = new XYChart.Series[firstSeries.length+secondSeries.length];

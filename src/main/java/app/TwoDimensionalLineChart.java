@@ -1,18 +1,12 @@
 package app;
 
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.stage.Stage;
-
-import javax.swing.*;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class TwoDimensionalBarChart extends TwoDimensionalChart{
-    public TwoDimensionalBarChart(ResultSet resultSet, int indexOfXAxis, int indexOfYAxis) {
+public class TwoDimensionalLineChart extends TwoDimensionalChart{
+    public TwoDimensionalLineChart(ResultSet resultSet, int indexOfXAxis, int indexOfYAxis) {
         super(resultSet, indexOfXAxis, indexOfYAxis);
     }
 
@@ -31,8 +25,8 @@ public class TwoDimensionalBarChart extends TwoDimensionalChart{
         catch(Exception e){
             e.printStackTrace();
         }
-        final BarChart<String,Number> bc =
-                new BarChart<>(xAxis,yAxis);
+        final LineChart<String,Number> bc =
+                new LineChart<>(xAxis,yAxis);
         Scene scene  = new Scene(bc,800,600);
         bc.getData().addAll(createSeries());
         stage.setScene(scene);
@@ -42,8 +36,8 @@ public class TwoDimensionalBarChart extends TwoDimensionalChart{
     public void graphChart(Stage stage, XYChart.Series[] extraSeries) {
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
-        final BarChart<String,Number> bc =
-                new BarChart<>(xAxis,yAxis);
+        final LineChart<String,Number> bc =
+                new LineChart<>(xAxis,yAxis);
         XYChart.Series[] createdSeries = createSeries();
 
         XYChart.Series[] series = new XYChart.Series[createdSeries.length+extraSeries.length];
