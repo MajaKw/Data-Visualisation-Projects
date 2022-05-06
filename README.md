@@ -1,8 +1,7 @@
 # Data-Visualisation-Project
-Funkcjonalności, które udało się zrobić
-- połączenie z bazą danych,
-- podstawowe menu
-- pole tekstowe, któras podczas wpisywania podpowiada propozycje wyboru
-- 2 wykresy (liniowy i słupkowy)
-- po wybraniu danych na osiach x i y pojawia się wykres
-Dalszy plan:
+Already made functionalities:
+- connection with data base,
+- basic menu,
+- autocomplete text field,
+- 2 plots (BarChart, LineChart)
+- feature thanks to which plot ocuurs after choosing data for x and y-axis
