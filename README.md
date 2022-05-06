@@ -4,5 +4,5 @@ Funkcjonalności, które udało się zrobić
 - podstawowe menu
 - pole tekstowe, któras podczas wpisywania podpowiada propozycje wyboru
 - 2 wykresy (liniowy i słupkowy)
-- po wybraniu danych na oś x i y pojawia się wykres
+- po wybraniu danych na osiach x i y pojawia się wykres
 Dalszy plan:
