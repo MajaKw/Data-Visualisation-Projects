@@ -13,18 +13,8 @@ public class TwoDimensionalLineChart extends TwoDimensionalChart{
 
     @Override
     public void graphChart(Stage stage) {
-        ResultSet resultSet = getResultSet();
-        int indexOfXAxis = getIndexOfXAxis();
-        int indexOfYAxis = getIndexOfYAxis();
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
-        try {
-            xAxis.setLabel(resultSet.getMetaData().getCatalogName(indexOfXAxis));
-            yAxis.setLabel(resultSet.getMetaData().getCatalogName(indexOfYAxis));
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
         final LineChart<String,Number> bc =
                 new LineChart<>(xAxis,yAxis);
         Scene scene  = new Scene(bc,800,600);
@@ -51,7 +41,7 @@ public class TwoDimensionalLineChart extends TwoDimensionalChart{
             i++;
         }
         Scene scene  = new Scene(bc,800,600);
-        bc.getData().addAll(createdSeries[0],extraSeries[0]);
+        bc.getData().addAll(series);
         stage.setScene(scene);
         stage.show();
     }

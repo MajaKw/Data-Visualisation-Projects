@@ -98,7 +98,7 @@ public class DiagramWindow {
                     System.out.println(SQLquery);
                     Connection conn = App.connect();
                     try {
-                        Statement stmt = conn.createStatement();
+                        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
                         ResultSet rs = stmt.executeQuery(SQLquery);
                         Stage st = new Stage();
                         TwoDimensionalBarChart barChar = new TwoDimensionalBarChart(rs, 1, 2);

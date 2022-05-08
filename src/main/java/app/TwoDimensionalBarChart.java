@@ -1,10 +1,7 @@
 package app;
 
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -19,18 +16,8 @@ public class TwoDimensionalBarChart extends TwoDimensionalChart{
 
     @Override
     public void graphChart(Stage stage) {
-        ResultSet resultSet = getResultSet();
-        int indexOfXAxis = getIndexOfXAxis();
-        int indexOfYAxis = getIndexOfYAxis();
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
-        try {
-            xAxis.setLabel(resultSet.getMetaData().getCatalogName(indexOfXAxis));
-            yAxis.setLabel(resultSet.getMetaData().getCatalogName(indexOfYAxis));
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
         final BarChart<String,Number> bc =
                 new BarChart<>(xAxis,yAxis);
         Scene scene  = new Scene(bc,800,600);
@@ -57,7 +44,7 @@ public class TwoDimensionalBarChart extends TwoDimensionalChart{
             i++;
         }
         Scene scene  = new Scene(bc,800,600);
-        bc.getData().addAll(createdSeries[0],extraSeries[0]);
+        bc.getData().addAll(series);
         stage.setScene(scene);
         stage.show();
     }

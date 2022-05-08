@@ -7,7 +7,7 @@ module searchEngine {
     requires java.desktop;
 
     opens Menu to javafx.fxml;
-    opens searchEngine to javafx.fxml;
     exports Menu;
+    opens searchEngine to javafx.fxml;
     exports searchEngine;
 }

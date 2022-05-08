@@ -28,11 +28,11 @@ public class Menu extends Application {
         // filling countries.json with entries of the format table_name.column_name
         Connection conn = App.connect();
         try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/beniu/Desktop/Studia/TCS/obiektowe/Data-Visualisation-Project/src/main/resources/searchEngine/countries.json"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Owner\\Documents\\oopProject\\src\\main\\resources\\searchEngine\\countries.json"));
             String SQLquery = "SELECT table_name, column_name " +
                     "FROM information_schema.columns " +
                     "WHERE table_schema NOT IN ('pg_catalog', 'information_schema')";
-            Statement stmt = conn.createStatement();
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery(SQLquery);
             writer.write("[\n");
             while(rs.next()) {
