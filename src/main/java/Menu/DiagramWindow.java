@@ -1,13 +1,15 @@
-package searchEngine;
+package Menu;
 
 import app.App;
 import app.TwoDimensionalBarChart;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
@@ -17,15 +19,19 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DiagramWindow {
+public class DiagramWindow extends Application {
     String xColumn = null; // name of the column for X-axis
     String yColumn = null; // name of the column for Y-axis
 
-    public void display(String title) throws Exception {
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    public void start(Stage stage) throws Exception {
         Stage window = new Stage();
         // zabezpieczenie ze wymusza kliknac w to okno i sie nim zajac (a nie tym "od spodem")
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle(title);
+        window.setTitle("title");
         window.setWidth(600);
         window.setHeight(600);
         // ** wyszukiwarka krajow
@@ -37,11 +43,11 @@ public class DiagramWindow {
         MenuBar menuBar = new MenuBar();
 
         // diagram menu
-        Menu menu_diagram, diagram2D, diagram3D;
+        javafx.scene.control.Menu menu_diagram, diagram2D, diagram3D;
         MenuItem barGraph, lineGraph, pieChart, histogram, dotGraph, bubbleChart;
         MenuItem example3D;
-        menu_diagram = new Menu("diagram");
-        diagram2D = new Menu("2D"); diagram3D = new Menu("3D");
+        menu_diagram = new javafx.scene.control.Menu("diagram");
+        diagram2D = new javafx.scene.control.Menu("2D"); diagram3D = new javafx.scene.control.Menu("3D");
         barGraph = new MenuItem("barGraph"); lineGraph = new MenuItem("lineGraph"); pieChart = new MenuItem("pieChart");
         histogram = new MenuItem("histogram"); dotGraph = new MenuItem("dotGraph"); bubbleChart = new MenuItem("bubbleChart");
         example3D = new MenuItem("example");
@@ -50,11 +56,11 @@ public class DiagramWindow {
         menu_diagram.getItems().addAll(diagram2D, diagram3D);
 
         // other simpler menus
-        Menu menu_options = new Menu("data");
+        javafx.scene.control.Menu menu_options = new javafx.scene.control.Menu("data");
         MenuItem countries_menu, categories_menu;
         countries_menu = new MenuItem("countires"); categories_menu = new MenuItem("categories");
         menu_options.getItems().addAll(countries_menu, categories_menu);
-        Menu menu_X = new Menu("X-axis"); Menu menu_Y = new Menu("Y-axis");
+        javafx.scene.control.Menu menu_X = new javafx.scene.control.Menu("X-axis"); javafx.scene.control.Menu menu_Y = new Menu("Y-axis");
         MenuItem yearX, countriesX, categoryX; MenuItem yearY, countriesY, categoryY;
         // musialam zrobic 2, bo nie dalo sie tych samych bo beda robic co innego w teorii
         yearX = new MenuItem("year"); countriesX = new MenuItem("countries"); categoryX = new MenuItem("category");
