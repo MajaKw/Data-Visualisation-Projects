@@ -11,12 +11,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
-import searchEngine.DiagramWindow;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -52,6 +50,9 @@ public class Menu extends Application {
 
         window = primaryStage;
         window.setTitle("data visualisation");
+
+        // loading ChartSetUpWindow
+
 
 
 
@@ -104,7 +105,7 @@ public class Menu extends Application {
 
         button_plus.setOnAction(event -> {
             try {
-                diagramWindow.display("diagram settings");
+                new ChartSetUpWindow().display(primaryStage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
