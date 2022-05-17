@@ -26,7 +26,7 @@ public class Menu extends Application {
         // filling countries.json with entries of the format table_name.column_name
         Connection conn = App.connect();
         try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Owner\\Documents\\oopProject\\src\\main\\resources\\searchEngine\\countries.json"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Owner\\Documents\\Projekty\\oopProjekt\\src\\main\\resources\\searchEngine\\countries.json"));
             String SQLquery = "SELECT table_name, column_name " +
                     "FROM information_schema.columns " +
                     "WHERE table_schema NOT IN ('pg_catalog', 'information_schema')";
