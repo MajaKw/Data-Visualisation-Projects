@@ -1,3 +1,4 @@
+
 module searchEngine {
     requires javafx.controls;
     requires javafx.fxml;
@@ -5,11 +6,13 @@ module searchEngine {
     requires json.simple;
     requires java.sql;
     requires java.desktop;
+    requires com.google.common;
 
-    opens Menu to javafx.fxml;
     exports Menu;
-    opens searchEngine to javafx.fxml;
     exports searchEngine;
-    opens MainMenu to javafx.fxml;
-    exports MainMenu;
+
+    opens Menu to
+            javafx.fxml;
+    opens searchEngine to
+            javafx.fxml;
 }

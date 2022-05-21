@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import Menu.DiagramWindow;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -24,24 +25,24 @@ public class Menu extends Application {
 
     public static void main(String[] args) {
         // filling countries.json with entries of the format table_name.column_name
-        Connection conn = App.connect();
-        try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Owner\\Documents\\Projekty\\oopProjekt\\src\\main\\resources\\searchEngine\\countries.json"));
-            String SQLquery = "SELECT table_name, column_name " +
-                    "FROM information_schema.columns " +
-                    "WHERE table_schema NOT IN ('pg_catalog', 'information_schema')";
-            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery(SQLquery);
-            writer.write("[\n");
-            while(rs.next()) {
-                writer.append('{' + "\"name\": \"" + rs.getString("table_name") + '.' + rs.getString("column_name") + "\"}");
-                if(!rs.isLast()) writer.append(",\n");
-            }
-            writer.append("\n]");
-            writer.close();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+//        Connection conn = App.connect();
+//        try{
+//            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Owner\\Documents\\Projekty\\oopProjekt\\src\\main\\resources\\searchEngine\\countries.json"));
+//            String SQLquery = "SELECT table_name, column_name " +
+//                    "FROM information_schema.columns " +
+//                    "WHERE table_schema NOT IN ('pg_catalog', 'information_schema')";
+//            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+//            ResultSet rs = stmt.executeQuery(SQLquery);
+//            writer.write("[\n");
+//            while(rs.next()) {
+//                writer.append('{' + "\"name\": \"" + rs.getString("table_name") + '.' + rs.getString("column_name") + "\"}");
+//                if(!rs.isLast()) writer.append(",\n");
+//            }
+//            writer.append("\n]");
+//            writer.close();
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
         launch(args);
     }
 
@@ -87,13 +88,14 @@ public class Menu extends Application {
         Button button_clean = new Button("clean");
 
         Button button_plus = new Button("+");
+        Button button_upload = new Button("Upload");
 
 //        MenuButton menu_plus = new MenuButton("+", null, menuItem_counties);
         MenuButton menu_data = new MenuButton("data", null,  menuItem_add, menuItem_delete);
 
         // positioning
         HBox box_data = new HBox(menu_data);
-        HBox right_corner = new HBox(button_plus);
+        HBox right_corner = new HBox(button_upload,button_plus);
 //        HBox right_corner = new HBox(menu_plus);
         right_corner.setAlignment(Pos.TOP_RIGHT);
         HBox.setHgrow(right_corner, Priority.ALWAYS);
@@ -106,6 +108,13 @@ public class Menu extends Application {
         button_plus.setOnAction(event -> {
             try {
                 new ChartSetUpWindow().display(primaryStage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        button_upload.setOnAction(event -> {
+            try {
+                diagramWindow.display("diagram settings");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
