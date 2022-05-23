@@ -1,10 +1,12 @@
 package DataMengment;
 
+import javafx.collections.FXCollections;
 import javafx.scene.chart.XYChart;
 
 import javax.imageio.spi.ServiceRegistry;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.stream.Collectors;
 
 public class SeriesCollector {
     XYChart.Series<String,Number>[] Series;
@@ -35,12 +37,26 @@ public class SeriesCollector {
     public XYChart.Series<String,Number>[] getSeries(int...columns){
         XYChart.Series<String,Number>[] toReturn = new XYChart.Series[columns.length];
         for (int i = 0; i < columns.length; i++) {
-            toReturn[i]=Series[columns[i]];
+            toReturn[i]=copySeries(Series[columns[i]]);
+
         }
         return toReturn;
     }
 
     public XYChart.Series<String,Number>[] getAllSeries(){
-        return Series;
+        XYChart.Series<String,Number>[] toReturn = new XYChart.Series[Series.length];
+        for (int i = 0; i < Series.length; i++) {
+            toReturn[i]=copySeries(Series[i]);
+
+        }
+        return toReturn;
+    }
+
+    public static <S, T> XYChart.Series<S, T> copySeries(XYChart.Series<S, T> series) {
+        XYChart.Series<S, T> copy = new XYChart.Series<>(series.getName(),
+                series.getData().stream()
+                        .map(data -> new XYChart.Data<S, T>(data.getXValue(), data.getYValue()))
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        return copy;
     }
 }
