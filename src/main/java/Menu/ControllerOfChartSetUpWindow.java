@@ -2,12 +2,13 @@ package Menu;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 
+
 public class ControllerOfChartSetUpWindow {
-    // TODO: make button2D selected by default
     // TODO: correct window resizing (so that buttons and fields stay centered)
     @FXML
     private ToggleButton button3D;
@@ -23,6 +24,11 @@ public class ControllerOfChartSetUpWindow {
     private Label zAxisInputLabel;
 
 
+    @FXML
+    public void initialize() {
+        button2D.setSelected(true);
+        zAxisInputLabel.setVisible(false);
+    }
     public void click2D(ActionEvent e) {
         button2D.setSelected(true);
         button3D.setSelected(false);
@@ -35,6 +41,7 @@ public class ControllerOfChartSetUpWindow {
         zAxisInputField.setVisible(true);
         zAxisInputLabel.setVisible(true);
     }
+
     public void createChart(ActionEvent e) {
         //create new window containing chart with specified data
         if(zAxisInputField.isVisible()) ChartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), zAxisInputField.getText());
