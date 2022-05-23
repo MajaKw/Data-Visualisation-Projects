@@ -65,7 +65,7 @@ public abstract class TwoDimensionalChart implements Chart {
             while (resultSet.next()) {
                 series[0].getData().add(new XYChart.Data(resultSet.getString(indexOfXAxis), (resultSet.getDouble(indexOfYAxis))/(max-min)));
             }
-        } catch (Exception e) {
+        } catch (Exception e){
             e.printStackTrace();
         }
         return series;

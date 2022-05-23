@@ -10,9 +10,15 @@ module searchEngine {
 
     exports Menu;
     exports searchEngine;
+    exports MainMenu;
+    exports DataMengment;
 
     opens Menu to
             javafx.fxml;
     opens searchEngine to
+            javafx.fxml;
+    opens MainMenu to
+            javafx.fxml;
+    opens DataMengment to
             javafx.fxml;
 }
