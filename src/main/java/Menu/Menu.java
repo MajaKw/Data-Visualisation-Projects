@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import Menu.DiagramWindow;
+import Menu.DataViewer;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -89,13 +90,14 @@ public class Menu extends Application {
 
         Button button_plus = new Button("+");
         Button button_upload = new Button("Upload");
+        Button data_view = new Button("Data viewer");
 
 //        MenuButton menu_plus = new MenuButton("+", null, menuItem_counties);
         MenuButton menu_data = new MenuButton("data", null,  menuItem_add, menuItem_delete);
 
         // positioning
         HBox box_data = new HBox(menu_data);
-        HBox right_corner = new HBox(button_upload,button_plus);
+        HBox right_corner = new HBox(data_view,button_upload,button_plus);
 //        HBox right_corner = new HBox(menu_plus);
         right_corner.setAlignment(Pos.TOP_RIGHT);
         HBox.setHgrow(right_corner, Priority.ALWAYS);
@@ -103,7 +105,6 @@ public class Menu extends Application {
         root.setTop(top_menu);
 //        System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
-        DiagramWindow diagramWindow = new DiagramWindow();
 
         button_plus.setOnAction(event -> {
             try {
@@ -114,7 +115,14 @@ public class Menu extends Application {
         });
         button_upload.setOnAction(event -> {
             try {
-                diagramWindow.display("diagram settings");
+                new DiagramWindow().display("Upload window");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        data_view.setOnAction(event -> {
+            try {
+                new DataViewer().display("Data viewer");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

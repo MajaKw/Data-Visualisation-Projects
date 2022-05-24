@@ -1,0 +1,27 @@
+#listView .list-cell{
+    -fx-alignment: center;
+    /*-fx-background-color: rgb(4, 20, 31);*/
+    /*-fx-text-fill: rgb(73, 94, 107);*/
+    /*-fx-focus-color: #039ED3;*/
+    -fx-highlight-fill: black;
+    -fx-min-width: 40;
+    -fx-font: 30px Impact;
+    /*-fx-border-style: dotted;*/
+    /*-fx-border-width: 2;*/
+    /*-fx-border-color: rgb(27, 51, 67);*/
+}
+#listView .list-cell:pressed{
+    /*-fx-text-fill: rgb(103, 114, 150);*/
+}
+#listView .list-cell:hover{
+    /*-fx-background-color: rgb(30, 51, 65);*/
+}
+#listView{
+    -fx-background-insets: 0; -fx-padding: 0;
+}
+#lay{
+    /*-fx-background-color: rgb(4, 20, 31);*/
+}
+#H1{
+    -fx-font: 30px Impact;
+}
