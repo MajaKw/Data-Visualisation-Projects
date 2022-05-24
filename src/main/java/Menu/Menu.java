@@ -1,5 +1,6 @@
 package Menu;
 
+import MainMenu.Settings;
 import app.App;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -124,7 +125,12 @@ public class Menu extends Application {
         Scene scene = new Scene(root, 400, 300);
         // odniesienie do pliku css
         scene.getStylesheets().add((new File("src/main/java/res/style.css")).toURI().toString());
-
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
         window.setScene(scene);
         window.show();
 

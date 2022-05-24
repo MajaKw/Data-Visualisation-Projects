@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Settings {
+    public static boolean isDarkMode = false;
+
+    @FXML
+    Button changeButton;
 
     void show(Stage stage){
         Parent root = null;
@@ -22,8 +26,13 @@ public class Settings {
             e.printStackTrace();
         }
 
-
         Scene scene = new Scene(root,600,400);
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
         stage.setScene(scene);
         stage.show();
     }
@@ -33,5 +42,9 @@ public class Settings {
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         mainMenu.show(stage);
     }
-
+    public void handleChangeButtonPressed(ActionEvent event){
+        isDarkMode=!isDarkMode;
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        show(stage);
+    }
 }

@@ -1,5 +1,6 @@
 package Menu;
 
+import MainMenu.Settings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -16,6 +17,12 @@ public class ChartSetUpWindow {
         try {
             Parent root = FXMLLoader.load(ChartSetUpWindow.class.getResource("ChartSetUpWindow.fxml"));
             Scene scene = new Scene(root);
+            if(Settings.isDarkMode){
+                scene.getStylesheets().add("DarkMode.css");
+            }
+            else {
+                scene.getStylesheets().add("LightMode.css");
+            }
             stage.setScene(scene);
             stage.show();
         } catch(Exception e) {
