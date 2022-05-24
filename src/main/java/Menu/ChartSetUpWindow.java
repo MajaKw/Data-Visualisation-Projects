@@ -1,5 +1,6 @@
 package Menu;
 
+import MainMenu.Settings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -14,13 +15,13 @@ public class ChartSetUpWindow {
         // load the .fxml file created in Scene Builder
         try {
             Parent root = FXMLLoader.load(ChartSetUpWindow.class.getResource("ChartSetUpWindow.fxml"));
-            // searching for button2D and setting it to be selected
-            for(var tmp : LoopingOverSceneGraph.loop(root, Node.class)) {
-                if(tmp.getId() == null) continue;
-                if(tmp.getId().equals("button2D")) ((ToggleButton) tmp).setSelected(true);
-                else if(tmp.getId().equals("zAxisInputLabel")) tmp.setVisible(false);
-            }
             Scene scene = new Scene(root);
+            if(Settings.isDarkMode){
+                scene.getStylesheets().add("DarkMode.css");
+            }
+            else {
+                scene.getStylesheets().add("LightMode.css");
+            }
             stage.setScene(scene);
             stage.show();
         } catch(Exception e) {

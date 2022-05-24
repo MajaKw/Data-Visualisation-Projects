@@ -2,13 +2,19 @@
 
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ChartWindow">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartWindow">
    <children>
-      <BarChart fx:id="chart" layoutX="14.0">
+      <VBox fx:id="ySeriesSettings" layoutX="444.0" layoutY="123.0" prefHeight="200.0" prefWidth="160.0" />
+      <BarChart fx:id="barChart" layoutY="23.0" prefHeight="400.0" prefWidth="433.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -16,5 +22,21 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
+      <TextField fx:id="addYseriesField" layoutX="445.0" layoutY="10.0" />
+      <Button fx:id="addYseriesButton" layoutX="481.0" layoutY="36.0" mnemonicParsing="false" onAction="#addYseries" text="Add Y-series" />
+      <RadioButton fx:id="barChartButton" layoutX="486.0" layoutY="347.0" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Bar chart">
+         <toggleGroup>
+            <ToggleGroup fx:id="BarOrLine" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="lineCharButton" layoutX="487.0" layoutY="376.0" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Line chart" toggleGroup="$BarOrLine" />
+      <LineChart fx:id="lineChart" layoutY="23.0" prefHeight="400.0" prefWidth="433.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
    </children>
 </AnchorPane>

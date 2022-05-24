@@ -1,5 +1,6 @@
 package MainMenu;
 
+import Menu.ChartSetUpWindow;
 import Menu.DiagramWindow;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -28,28 +29,27 @@ public class MainMenu extends Application {
         show(stage);
     }
 
-    void show(Stage stage){
+    public void show(Stage stage){
         Parent root = null;
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Scene scene = new Scene(root,600,400);
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
         stage.setScene(scene);
         stage.show();
     }
 
     public void handleNewProjectButtonPressed(ActionEvent event){
-        Menu.Menu menu = new Menu.Menu();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        try {
-            menu.start(stage);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        ChartSetUpWindow.display(stage);
     }
 
 
@@ -60,7 +60,6 @@ public class MainMenu extends Application {
     }
 
     public void handleImportDataButtonPressed(ActionEvent event){
-
             try {
                 new DiagramWindow().display("Upload window");
             } catch (Exception e) {
@@ -69,9 +68,9 @@ public class MainMenu extends Application {
     }
 
     public void handleSettingsButtonPressed(ActionEvent event){
-        AboutProject aboutProject = new AboutProject();
+        Settings settings = new Settings();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        aboutProject.show(stage);
+        settings.show(stage);
     }
 
     public void handleAboutProjectButtonPressed(ActionEvent event){

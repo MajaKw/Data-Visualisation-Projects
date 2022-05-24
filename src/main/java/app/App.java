@@ -3,9 +3,9 @@ package app;
 import java.sql.*;
 
 public class App {
-    private static final String url = "jdbc:postgresql://localhost:5432/root"; // jdbc:postgresql://server-name:server-port/database-name
-    private static final String user = "root";
-    private static final String password = "password";
+    private static final String url = "jdbc:postgresql://localhost:5432/postgres"; // jdbc:postgresql://server-name:server-port/database-name
+    private static final String user = "postgres";
+    private static final String password = "";
 
     public static Connection connect() {
         Connection conn = null;

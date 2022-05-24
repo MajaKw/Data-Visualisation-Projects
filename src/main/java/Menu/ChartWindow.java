@@ -1,45 +1,65 @@
 package Menu;
 
-import app.App;
-import app.TwoDimensionalBarChart;
+import DataManagement.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import MainMenu.Settings;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.chart.LineChart;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 public class ChartWindow {
+    public static ObservableList<String> seriesColors = FXCollections.observableArrayList("Red", "Green", "Blue");
+
     public static void showChartWindow(String xAxis, String yAxis, String zAxis){
+        Parent root = null;
         try {
-            Parent root = FXMLLoader.load(ChartSetUpWindow.class.getResource("ChartWindow.fxml"));
-            // searching for a chart in scene graph and filling it with data
-            for(var tmp : root.getChildrenUnmodifiable()){
-                // creating ResultSet
-                String SQLquery = "SELECT year, GDP_per_capita FROM Azerbaijan";
-                Connection conn = App.connect();
-                ResultSet rs = null;
-                try {
-                    Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                    rs = stmt.executeQuery(SQLquery);
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
-
-                ((BarChart)tmp).getData().addAll(new TwoDimensionalBarChart(rs, 1, 2).createSeries());
-            }
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        } catch(Exception e) {
+            root = FXMLLoader.load(ChartSetUpWindow.class.getResource("ChartWindow.fxml"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        // getting numbers of column yAxis
+        String path = "Test1.csv"; // path to file will be deduced by xAxis variable?
+        int yAxisIndex = UsefulFunctions.getColumnIndex(path, yAxis);
+        if(yAxisIndex < 0) return;
+
+        // searching for charts in scene graph and filling it with data
+        for(var tmp : UsefulFunctions.loopOverSceneGraph(root, LineChart.class)){
+            tmp.getData().addAll(Main.getSeries(path, yAxisIndex));
+        }
+        for(var tmp : UsefulFunctions.loopOverSceneGraph(root, BarChart.class)){
+            tmp.getData().addAll(Main.getSeries(path, yAxisIndex));
+        }
+
+        for(var tmp : UsefulFunctions.loopOverSceneGraph(root, VBox.class)){
+            HBox oneSeriesSettings = null;
+            try{
+                oneSeriesSettings = FXMLLoader.load(ChartSetUpWindow.class.getResource("oneSeriesSettings.fxml"));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+            for(var tmp2 : oneSeriesSettings.getChildren()) {
+                if(tmp2 instanceof Label) ((Label)tmp2).setText(yAxis);
+                if(tmp2 instanceof ComboBox<?>) ((ComboBox)tmp2).getItems().addAll(seriesColors);
+            }
+            tmp.getChildren().add(oneSeriesSettings);
+        }
+        Scene scene = new Scene(root);
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 }
