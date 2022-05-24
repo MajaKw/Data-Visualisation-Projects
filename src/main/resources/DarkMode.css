@@ -1,16 +1,58 @@
 
 .root{
--fx-background-color:#505250;
+-fx-background-color:#0d1b2a;
 }
 
 #changeButton{
--fx-background-color:#abd1d0;
+-fx-background-color:#e4d9ff;
+-fx-text-fill: #1e2749;
 }
 
 .button{
--fx-background-color:#91a1a0;
+-fx-background-color:#1b263b;
+-fx-text-fill: #e0e1dd;
+}
+
+.toggle-button{
+-fx-background-color: #1b263b;
+-fx-text-fill: #e0e1dd;
 }
 
 #titleLabel{
--fx-text-fill:#2f2f30;
+-fx-text-fill: #415a77;
+}
+
+.label{
+-fx-text-fill: #e0e1dd;
+}
+
+.text-field{
+-fx-background-color:#1b263b;
+-fx-text-fill: #e0e1dd;
+}
+
+.radio-button{
+-fx-text-fill: #e0e1dd;
+-fx-mark-color: #415a77 ;
+}
+
+.combo-box{
+-fx-background-color:#1b263b;
+-fx-text-fill: #415a77;
+}
+
+.axis{
+-fx-tick-label-fill: #415a77;
+}
+
+.chart-legend {
+-fx-background-color:#1b263b;
+}
+
+.chart-legend-item{
+-fx-text-fill: #415a77;
+}
+
+.chart-plot-background{
+-fx-background-color: #778da9;
 }
