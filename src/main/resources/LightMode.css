@@ -1,0 +1,16 @@
+
+.root{
+-fx-background-color:#fafff;
+}
+
+#changeButton{
+-fx-background-color:#91a1a0;
+}
+
+.button{
+-fx-background-color:#abd1d0;
+}
+
+#titleLabel{
+-fx-text-fill: #7acfcc;
+}

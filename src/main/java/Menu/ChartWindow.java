@@ -4,6 +4,7 @@ import DataMengment.Main;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import MainMenu.Settings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -59,6 +60,12 @@ public class ChartWindow {
             tmp.getChildren().add(oneSeriesSettings);
         }
         Scene scene = new Scene(root);
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();

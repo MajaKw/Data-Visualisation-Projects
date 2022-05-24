@@ -34,8 +34,13 @@ public class MainMenu extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Scene scene = new Scene(root,600,400);
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
         stage.setScene(scene);
         stage.show();
     }
@@ -65,9 +70,9 @@ public class MainMenu extends Application {
     }
 
     public void handleSettingsButtonPressed(ActionEvent event){
-        AboutProject aboutProject = new AboutProject();
+        Settings settings = new Settings();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        aboutProject.show(stage);
+        settings.show(stage);
     }
 
     public void handleAboutProjectButtonPressed(ActionEvent event){

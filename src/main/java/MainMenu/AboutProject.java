@@ -24,6 +24,12 @@ public class AboutProject {
 
 
         Scene scene = new Scene(root,600,400);
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
         stage.setScene(scene);
         stage.show();
     }

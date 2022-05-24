@@ -1,5 +1,6 @@
 package Menu;
 
+import MainMenu.Settings;
 import app.App;
 import app.TwoDimensionalBarChart;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -230,6 +231,12 @@ public class DiagramWindow {
 
         // adding scene to the window
         Scene scene = new Scene(layout);
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
         window.setScene(scene);
         window.showAndWait();
 
