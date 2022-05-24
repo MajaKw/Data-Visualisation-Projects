@@ -1,6 +1,7 @@
 package MainMenu;
 
 import Menu.ChartSetUpWindow;
+import Menu.DiagramWindow;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,9 +60,11 @@ public class MainMenu extends Application {
     }
 
     public void handleImportDataButtonPressed(ActionEvent event){
-        ImportData importData = new ImportData();
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        importData.show(stage);
+            try {
+                new DiagramWindow().display("Upload window");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
     }
 
     public void handleSettingsButtonPressed(ActionEvent event){

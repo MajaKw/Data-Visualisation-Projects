@@ -1,0 +1,10 @@
+VBox {
+    -fx-padding: 5;
+}
+.label{
+    -fx-padding: 5;
+    -fx-alignment: center;
+}
+.table-column {
+    -fx-alignment: CENTER;
+}

@@ -4,3 +4,6 @@
 .menu-button > .arrow-button > .arrow {
     -fx-padding: 0;
 }
+#listView .list-cell {
+    -fx-alignment: center;
+}

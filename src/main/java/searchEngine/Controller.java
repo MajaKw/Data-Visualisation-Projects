@@ -1,10 +1,15 @@
 package searchEngine;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,7 +29,7 @@ public class Controller implements Initializable {
     public String filePath;
     ArrayList<String> words;
     Object obj;
-    JSONArray jo;
+    JSONObject jo;
 
     @FXML
     private TextField searchBar;
@@ -34,10 +39,11 @@ public class Controller implements Initializable {
 
     public Controller() throws IOException, ParseException {
         System.out.println("---------------creation----------------");
-        filePath = "src/main/resources/searchEngine/countries.json" ;
+        filePath = "src/main/resources/categories.json";
+
         words = new ArrayList<>();
         this.obj = new JSONParser().parse(new FileReader(filePath));
-        this.jo = (JSONArray) obj;
+        this.jo = (JSONObject) obj;
     }
     public void setPath(String filePath) throws IOException, ParseException {
         this.filePath = filePath;
@@ -52,12 +58,36 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        searchBar.focusedProperty().addListener((obs, oldVal, newVal) ->
+                {
+                    listView.setVisible(newVal);
+                    listView.setManaged(newVal);
+                });
+        listView.focusedProperty().addListener((obs, oldVal, newVal) ->
+        {
+            listView.setVisible(newVal);
+            listView.setManaged(newVal);
+        });
+        listView.setOnMouseClicked(event -> {
+            if (event.getClickCount()==2){
+                String File = listView.getSelectionModel().getSelectedItem();
+                searchBar.setText(File);
+                listView.getSelectionModel().clearSelection();
+                listView.getFocusModel().focus(-1);
+                listView.setVisible(false);
+                listView.setManaged(false);
+            }
+        });;
         words.clear();
-        for (int i = 0; i<jo.size(); i++){
-            JSONObject obj = (JSONObject) jo.get(i);
-            String name = (String) obj.get("name");
-            words.add(name);
+
+        for (Object o : jo.keySet()) {
+            JSONArray cattegory = (JSONArray) jo.get(o);
+            for (int i = 0; i<cattegory.size(); i++){
+                String obj = (String) cattegory.get(i);
+                words.add(obj);
+            }
         }
+
         listView.getItems().addAll(words);
     }
 

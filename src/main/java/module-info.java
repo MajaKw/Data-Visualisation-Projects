@@ -9,6 +9,7 @@ module searchEngine {
     requires com.google.common;
 
     exports Menu;
+    exports MainMenu;
     exports searchEngine;
     exports MainMenu;
     exports DataManagement;
