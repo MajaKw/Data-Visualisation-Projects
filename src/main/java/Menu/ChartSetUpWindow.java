@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 
 public class ChartSetUpWindow {
 
-
     public static void display(Stage stage){
         // load the .fxml file created in Scene Builder
         try {

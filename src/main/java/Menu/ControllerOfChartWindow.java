@@ -3,11 +3,12 @@ package Menu;
 import DataMengment.Main;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class ControllerOfChartWindow {
     @FXML
@@ -19,13 +20,14 @@ public class ControllerOfChartWindow {
     @FXML
     Button addYseriesButton;
     @FXML
-    RadioButton barChartButton;
+    RadioButton barChartButton, lineCharButton;
     @FXML
-    RadioButton lineCharButton;
+    VBox ySeriesSettings;
 
     @FXML
     public void initialize(){
         lineChart.setVisible(false);
+        barChart.setVisible(true);
         barChartButton.setSelected(true);
     }
 
@@ -40,11 +42,29 @@ public class ControllerOfChartWindow {
         }
     }
 
-    public void addYseries(javafx.event.ActionEvent e) {
+    public void addYseries(ActionEvent e) {
         String columnName = addYseriesField.getText();
+        //check if already contains this series
+        for(var tmp : UsefulFunctions.loopOverSceneGraph(ySeriesSettings, Label.class)) {
+            if(tmp.getText().equals(columnName)) return;
+        }
         String path = "Test1.csv"; // should it be deduced from columnName?
         int columnIndex = UsefulFunctions.getColumnIndex(path, columnName);
+        if(columnIndex < 0) return; // check if specified column exists
         barChart.getData().addAll(Main.getSeries(path, columnIndex));
         lineChart.getData().addAll(Main.getSeries(path, columnIndex));
+
+        // adding HBox with this series settings controls
+        HBox oneSeriesSettings = null;
+        try{
+            oneSeriesSettings = FXMLLoader.load(ChartSetUpWindow.class.getResource("oneSeriesSettings.fxml"));
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        for(var tmp2 : oneSeriesSettings.getChildren()) {
+            if(tmp2 instanceof Label) ((Label)tmp2).setText(columnName);
+            if(tmp2 instanceof ComboBox<?>) ((ComboBox)tmp2).getItems().addAll(ChartWindow.seriesColors);
+        }
+        ySeriesSettings.getChildren().add(oneSeriesSettings);
     }
 }

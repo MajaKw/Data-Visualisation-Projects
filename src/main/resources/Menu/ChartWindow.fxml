@@ -9,9 +9,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartWindow">
    <children>
+      <VBox fx:id="ySeriesSettings" layoutX="444.0" layoutY="123.0" prefHeight="200.0" prefWidth="160.0" />
       <BarChart fx:id="barChart" layoutY="23.0" prefHeight="400.0" prefWidth="433.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
@@ -20,14 +22,14 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <TextField fx:id="addYseriesField" layoutX="453.0" layoutY="102.0" />
-      <Button fx:id="addYseriesButton" layoutX="489.0" layoutY="128.0" mnemonicParsing="false" onAction="#addYseries" text="Add Y-series" />
-      <RadioButton fx:id="barChartButton" layoutX="486.0" layoutY="253.0" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Bar chart">
+      <TextField fx:id="addYseriesField" layoutX="445.0" layoutY="10.0" />
+      <Button fx:id="addYseriesButton" layoutX="481.0" layoutY="36.0" mnemonicParsing="false" onAction="#addYseries" text="Add Y-series" />
+      <RadioButton fx:id="barChartButton" layoutX="486.0" layoutY="347.0" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Bar chart">
          <toggleGroup>
             <ToggleGroup fx:id="BarOrLine" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="lineCharButton" layoutX="486.0" layoutY="285.0" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Line chart" toggleGroup="$BarOrLine" />
+      <RadioButton fx:id="lineCharButton" layoutX="487.0" layoutY="376.0" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Line chart" toggleGroup="$BarOrLine" />
       <LineChart fx:id="lineChart" layoutY="23.0" prefHeight="400.0" prefWidth="433.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />

@@ -10,16 +10,15 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-/*
-    Function returning all elements in the scene graph of the required type
- */
+
 
 public class UsefulFunctions {
+    // returning all elements of the specified type contained in the scene graph
     public static <T> List<T> loopOverSceneGraph(Parent parent, Class<T> type) {
         List<T> elements = new LinkedList<>();
         for(Node node : parent.getChildrenUnmodifiable()) {
             if(node instanceof Pane) elements.addAll(loopOverSceneGraph((Pane) node, type));
-            else if(type.isAssignableFrom(node.getClass())) elements.add((T) node);
+            if(type.isAssignableFrom(node.getClass())) elements.add((T) node);
         }
         return Collections.unmodifiableList(elements);
     }
