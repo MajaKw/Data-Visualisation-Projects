@@ -1,4 +1,4 @@
-package DataMengment;
+package DataManagement;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

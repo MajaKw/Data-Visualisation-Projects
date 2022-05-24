@@ -1,5 +1,6 @@
 package MainMenu;
 
+import Menu.ChartSetUpWindow;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +28,7 @@ public class MainMenu extends Application {
         show(stage);
     }
 
-    void show(Stage stage){
+    public void show(Stage stage){
         Parent root = null;
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
@@ -46,14 +47,8 @@ public class MainMenu extends Application {
     }
 
     public void handleNewProjectButtonPressed(ActionEvent event){
-        Menu.Menu menu = new Menu.Menu();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        try {
-            menu.start(stage);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        ChartSetUpWindow.display(stage);
     }
 
 

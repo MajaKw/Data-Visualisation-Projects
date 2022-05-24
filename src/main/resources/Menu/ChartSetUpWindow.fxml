@@ -45,5 +45,6 @@
             <Button fx:id="createChartButton" alignment="CENTER" mnemonicParsing="false" onAction="#createChart" prefHeight="26.0" prefWidth="69.0" text="Graph it!" />
          </children>
       </HBox>
+      <Button fx:id="backToMainMenuButton" layoutY="1.0" mnemonicParsing="false" onAction="#backToMainMenu" text="Back to Main Menu" />
    </children>
 </AnchorPane>

@@ -1,11 +1,15 @@
 package Menu;
 
+import MainMenu.MainMenu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.stage.Stage;
 
 
 public class ControllerOfChartSetUpWindow {
@@ -22,6 +26,8 @@ public class ControllerOfChartSetUpWindow {
     private TextField zAxisInputField;
     @FXML
     private Label zAxisInputLabel;
+    @FXML
+    private Button backToMainMenuButton;
 
 
     @FXML
@@ -46,5 +52,11 @@ public class ControllerOfChartSetUpWindow {
         //create new window containing chart with specified data
         if(zAxisInputField.isVisible()) ChartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), zAxisInputField.getText());
         else ChartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), null);
+    }
+
+    public void backToMainMenu(ActionEvent e) {
+        MainMenu mainMenu = new MainMenu();
+        Stage stage = (Stage)((Node) e.getSource()).getScene().getWindow();
+        mainMenu.show(stage);
     }
 }

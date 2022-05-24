@@ -1,6 +1,6 @@
 package Menu;
 
-import DataMengment.Main;
+import DataManagement.Main;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;

@@ -1,9 +1,8 @@
-package DataMengment;
+package DataManagement;
 
 import javafx.collections.FXCollections;
 import javafx.scene.chart.XYChart;
 
-import javax.imageio.spi.ServiceRegistry;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.stream.Collectors;

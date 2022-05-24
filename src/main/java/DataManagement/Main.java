@@ -1,4 +1,4 @@
-package DataMengment;
+package DataManagement;
 
 import javafx.scene.chart.XYChart;
 

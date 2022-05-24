@@ -11,7 +11,7 @@ module searchEngine {
     exports Menu;
     exports searchEngine;
     exports MainMenu;
-    exports DataMengment;
+    exports DataManagement;
 
     opens Menu to
             javafx.fxml;
@@ -19,6 +19,6 @@ module searchEngine {
             javafx.fxml;
     opens MainMenu to
             javafx.fxml;
-    opens DataMengment to
+    opens DataManagement to
             javafx.fxml;
 }
