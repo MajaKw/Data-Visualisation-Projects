@@ -181,8 +181,9 @@ public class ControllerOfChartSetUpWindow {
 
     public void createChart(ActionEvent e) {
         //create new window containing chart with specified data
-        if(zAxisInputField.isVisible()) ChartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), zAxisInputField.getText());
-        else ChartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), null);
+        ChartWindow chartWindow = new ChartWindow();
+        if(zAxisInputField.isVisible()) chartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), zAxisInputField.getText());
+        else chartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), null);
     }
 
     public void backToMainMenu(ActionEvent e) {

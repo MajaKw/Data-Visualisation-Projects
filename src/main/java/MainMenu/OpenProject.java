@@ -68,7 +68,8 @@ public class OpenProject {
                     BufferedReader reader = new BufferedReader(new FileReader(f));
                     String line = reader.readLine();
                     String[] start = line.split(";");
-                    ChartWindow.showChartWindow(start[0],start[1],null);
+                    ChartWindow chartWindow = new ChartWindow();
+                    chartWindow.showChartWindow(start[0],start[1],null);
                 } catch (Exception e) {
                     error.setText("Something went wrong");
                     return;

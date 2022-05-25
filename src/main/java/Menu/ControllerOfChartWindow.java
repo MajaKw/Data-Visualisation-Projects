@@ -51,12 +51,15 @@ public class ControllerOfChartWindow {
     }
 
     public void addYseries(ActionEvent e) {
-        String columnName = addYseriesField.getText();
+        addYseriesStatic(ySeriesSettings, barChart, lineChart, "Test1.csv", addYseriesField.getText());
+    }
+
+    public static void addYseriesStatic(VBox ySeriesSettings, BarChart barChart, LineChart lineChart, String path, String columnName) {
         //check if already contains this series
         for(var tmp : UsefulFunctions.loopOverSceneGraph(ySeriesSettings, Label.class)) {
             if(tmp.getText().equals(columnName)) return;
         }
-        String path = "Test1.csv"; // should it be deduced from columnName?
+        path = "Test1.csv"; // should it be deduced from columnName?
         int columnIndex = UsefulFunctions.getColumnIndex(path, columnName);
         if(columnIndex < 0) return; // check if specified column exists
 
@@ -76,7 +79,6 @@ public class ControllerOfChartWindow {
         for(var tmp2 : oneSeriesSettings.getChildren()) {
             if(tmp2 instanceof Label) ((Label)tmp2).setText(columnName);
             if(tmp2 instanceof ColorPicker) {
-                ((ColorPicker)tmp2).setValue(Color.RED);
                 ((ColorPicker)tmp2).valueProperty().addListener(new ChangeListener<Color>() {
                     @Override
                     public void changed(ObservableValue<? extends Color> observableValue, Color color, Color t1) {
