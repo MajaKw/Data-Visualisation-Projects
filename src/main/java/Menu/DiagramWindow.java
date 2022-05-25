@@ -1,47 +1,32 @@
 package Menu;
 
 import MainMenu.Settings;
-
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.*;
-//import java.awt.Component;
-import java.awt.*;
 import java.io.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.*;
 import java.util.List;
 
 import com.google.common.io.Files;
-import org.controlsfx.control.PropertySheet;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import searchEngine.MainController;
 
 public class DiagramWindow {
     Stage window = new Stage();
@@ -53,10 +38,10 @@ public class DiagramWindow {
 
     Text error = new Text(10,50,"");
     HBox error_layout = new HBox();
-    Map<String, String> hm = new HashMap<String, String>();
+    Map<String, String> hm = new HashMap<>();
 
 
-    public void display(String title) throws Exception {
+    public void display(String title) {
         // zabezpieczenie ze wymusza kliknac w to okno i sie nim zajac (a nie tym "od spodem")
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
@@ -98,53 +83,55 @@ public class DiagramWindow {
         fileChooser.setTitle("Open Data File");
         List<String> extensions = Arrays.asList("csv", "txt");
 
-                File uploaded_file = fileChooser.showOpenDialog(window);
-                //ERROR CHECKS
-                if(uploaded_file == null){
-                    error.setText("No file chosen");
-                    return;
-                }
-                System.out.println(uploaded_file);
-                String extension = Files.getFileExtension(uploaded_file.getAbsolutePath());
-                long file_size = uploaded_file.length();
-                if (!extensions.contains(extension)) {
-                    error.setText("File extension not in allowed: " + extensions.toString());
-                    return;
-                }
-                if(file_size>500000){
-                    error.setText("File is too big");
-                    return;
-                }
-                //END
+        File uploaded_file = fileChooser.showOpenDialog(window);
+        //ERROR CHECKS
+        if(uploaded_file == null){
+            error.setText("No file chosen");
+            return;
+        }
+        System.out.println(uploaded_file);
+        String extension = Files.getFileExtension(uploaded_file.getAbsolutePath());
+        long file_size = uploaded_file.length();
+        if (!extensions.contains(extension)) {
+            error.setText("File extension not in allowed: " + extensions.toString());
+            return;
+        }
+        if(file_size>500000){
+            error.setText("File is too big");
+            return;
+        }
+        //END
+        try {
+            String separator = table_creation("",uploaded_file);
+
+            Label label1 = new Label("Separator:");
+            TextField textField = new TextField();
+            textField.setText(separator);
+
+            Button button = new Button("Change");
+            HBox hb = new HBox();
+            hb.getChildren().addAll(label1, textField,button);
+            hb.setSpacing(10);
+            layout_content.getChildren().add(hb);
+
+            button.setOnAction(actionEvents ->  {
                 try {
-                    String separator = table_creation("",uploaded_file);
-
-                    Label label1 = new Label("Separator:");
-                    TextField textField = new TextField();
-                    textField.setText(separator);
-
-                    Button button = new Button("Change");
-                    HBox hb = new HBox();
-                    hb.getChildren().addAll(label1, textField,button);
-                    hb.setSpacing(10);
+                    hm.clear();
+                    layout_content.getChildren().clear();
+                    table_creation(textField.getText(),uploaded_file);
                     layout_content.getChildren().add(hb);
-
-                    button.setOnAction(actionEvents ->  {
-                        try {
-                            table_creation(textField.getText(),uploaded_file);
-                            layout_content.getChildren().add(hb);
-                        }catch (FileNotFoundException e) {
-                            error.setText("File was not found");
-                            return;
-                        }
-                    });
-
-
-
-                } catch (FileNotFoundException e) {
+                }catch (FileNotFoundException e) {
                     error.setText("File was not found");
                     return;
                 }
+            });
+
+
+
+        } catch (FileNotFoundException e) {
+            error.setText("File was not found");
+            return;
+        }
 
 //        layout.setAlignment(Pos.CENTER);
         // **
@@ -289,7 +276,7 @@ public class DiagramWindow {
                     JSONObject obj = (JSONObject) new JSONParser().parse(new FileReader("src/main/resources/categories.json"));
                     JSONArray catar = (JSONArray) obj.get(comboBox.getValue());
                     if (catar.contains(String.format(path_format,comboBox.getValue(),data,textField2.getText()))){
-                        error.setText("That metric already exists: "+String.format(path_format,data,comboBox.getValue(),textField2.getText()));
+                        error.setText("That metric already exists: "+String.format(path_format,comboBox.getValue(),data,textField2.getText()));
                         return;
                     }
                 } catch (IOException e) {

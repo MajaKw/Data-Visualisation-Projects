@@ -1,4 +1,4 @@
-#listView .list-cell{
+.list-view .list-cell{
     -fx-alignment: center;
     /*-fx-background-color: rgb(4, 20, 31);*/
     /*-fx-text-fill: rgb(73, 94, 107);*/
@@ -10,14 +10,15 @@
     /*-fx-border-width: 2;*/
     /*-fx-border-color: rgb(27, 51, 67);*/
 }
-#listView .list-cell:pressed{
+.list-view .list-cell:pressed{
     /*-fx-text-fill: rgb(103, 114, 150);*/
 }
-#listView .list-cell:hover{
+.list-view .list-cell:hover{
     /*-fx-background-color: rgb(30, 51, 65);*/
 }
-#listView{
+.list-view{
     -fx-background-insets: 0; -fx-padding: 0;
+    -fx-pref-height: 600;
 }
 #lay{
     /*-fx-background-color: rgb(4, 20, 31);*/
