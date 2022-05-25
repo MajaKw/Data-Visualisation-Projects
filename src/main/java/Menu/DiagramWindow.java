@@ -54,6 +54,7 @@ public class DiagramWindow {
 
     Text error = new Text(10,50,"");
     HBox error_layout = new HBox();
+    Map<String, String> hm = new HashMap<String, String>();
 
 
     public void display(String title) throws Exception {
@@ -68,7 +69,7 @@ public class DiagramWindow {
 //        JMenuBar menu = new JMenuBar();
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("search.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("search.fxml"));
 //        System.out.println(fxmlLoader.getController().toString());
         // tu problem jest taki ze chcialabym sie dostac do obeiktu Controller i tam ustawic za pomoca funckji odpowiednia sciezke
         // zeby miec jedna wyszukiwarke dla krajow i kategorii, ale jest z tym jakis problem do zmiany pozniej
@@ -76,7 +77,7 @@ public class DiagramWindow {
 
         VBox layout = new VBox();
         layout.setSpacing(10);
-        layout_content.getChildren().add(root);
+//        layout_content.getChildren().add(root);
         layout_content.setSpacing(10);
 
 
@@ -182,6 +183,9 @@ public class DiagramWindow {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Uploaded/"+comboBox.getValue()+"/"+file_name.replace("/","").replaceAll("[-+.^:/\\,]","")+".csv", true));
             for (int j=0; j<row_data.size(); j++){
+                if (!hm.get("X").equals(Integer.toString(j)) && !hm.get("Y").equals(Integer.toString(j))&&!row_data.get(0).equals("---EOD---")){
+                    continue;
+                }
                 if (j==row_data.size()-1){
                     writer.append((String) row_data.get(j));
                 }else{
@@ -246,7 +250,7 @@ public class DiagramWindow {
         MenuItem mi1 = new MenuItem("Set column as label and save");
         MenuItem mi2 = new MenuItem("Set as default X");
         MenuItem mi3 = new MenuItem("Set as default Y");
-        Map<String, String> hm = new HashMap<String, String>();
+
         hm.put("X", null);
         hm.put("Y", null);
         mi2.setOnAction((ActionEvent event) -> {
@@ -270,6 +274,8 @@ public class DiagramWindow {
                 error.setText("Please fill all of the data");
                 return;
             }
+
+
             TablePosition item = (TablePosition) data_table.getSelectionModel().getSelectedCells().get(0);
             int row_count = data_table.getItems().size();
             TableColumn col = item.getTableColumn();
@@ -280,6 +286,18 @@ public class DiagramWindow {
                 int row = i;
                 Object it = data_table.getItems().get(row);
                 String data = (String) col.getCellObservableValue(it).getValue();
+                try {
+                    JSONObject obj = (JSONObject) new JSONParser().parse(new FileReader("src/main/resources/categories.json"));
+                    JSONArray catar = (JSONArray) obj.get(comboBox.getValue());
+                    if (catar.contains(String.format(path_format,comboBox.getValue(),data,textField2.getText()))){
+                        error.setText("That metric already exists: "+String.format(path_format,data,comboBox.getValue(),textField2.getText()));
+                        return;
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
                 if (!done.contains(data)){
                     ObservableList<String> labels = FXCollections.observableArrayList();
                     for (int f = 0; f < row1.size(); f++){
