@@ -4,11 +4,14 @@ import DataManagement.Main;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ControllerOfChartWindow {
     @FXML
@@ -53,7 +56,6 @@ public class ControllerOfChartWindow {
         if(columnIndex < 0) return; // check if specified column exists
         barChart.getData().addAll(Main.getSeries(path, columnIndex));
         lineChart.getData().addAll(Main.getSeries(path, columnIndex));
-
         // adding HBox with this series settings controls
         HBox oneSeriesSettings = null;
         try{
@@ -66,5 +68,14 @@ public class ControllerOfChartWindow {
             if(tmp2 instanceof ComboBox<?>) ((ComboBox)tmp2).getItems().addAll(ChartWindow.seriesColors);
         }
         ySeriesSettings.getChildren().add(oneSeriesSettings);
+    }
+
+
+    public void handleSaveButtonPressed(ActionEvent event){
+        Stage newStage = new Stage();
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        SaveWindow saveWindow = new SaveWindow();
+        saveWindow.display(newStage);
+        newStage.showAndWait();
     }
 }

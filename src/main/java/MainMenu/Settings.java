@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Settings {
-    public static boolean isDarkMode = false;
+    public static boolean isDarkMode = true;
 
     @FXML
     Button changeButton;

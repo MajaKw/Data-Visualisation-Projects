@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 public class ChartWindow {
     public static ObservableList<String> seriesColors = FXCollections.observableArrayList("Red", "Green", "Blue");
+    static StringBuilder toSave;
 
     public static void showChartWindow(String xAxis, String yAxis, String zAxis){
         Parent root = null;
@@ -31,13 +32,16 @@ public class ChartWindow {
         if(yAxisIndex < 0) return;
 
         // searching for charts in scene graph and filling it with data
+
         for(var tmp : UsefulFunctions.loopOverSceneGraph(root, LineChart.class)){
             tmp.getData().addAll(Main.getSeries(path, yAxisIndex));
         }
         for(var tmp : UsefulFunctions.loopOverSceneGraph(root, BarChart.class)){
             tmp.getData().addAll(Main.getSeries(path, yAxisIndex));
         }
-
+        toSave = new StringBuilder();
+        toSave.append(xAxis).append(";").append(yAxis).append("\n");
+        System.out.println(toSave);
         for(var tmp : UsefulFunctions.loopOverSceneGraph(root, VBox.class)){
             HBox oneSeriesSettings = null;
             try{
