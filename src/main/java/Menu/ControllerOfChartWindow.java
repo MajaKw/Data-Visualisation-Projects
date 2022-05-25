@@ -6,11 +6,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -19,10 +16,11 @@ import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
 public class ControllerOfChartWindow {
+    ChartWindow chartWindow;
     @FXML
-    BarChart barChart;
+    public BarChart barChart;
     @FXML
-    LineChart lineChart;
+    public LineChart lineChart;
     @FXML
     TextField addYseriesField;
     @FXML
@@ -30,7 +28,8 @@ public class ControllerOfChartWindow {
     @FXML
     RadioButton barChartButton, lineCharButton;
     @FXML
-    VBox ySeriesSettings;
+    public VBox ySeriesSettings;
+
 
     @FXML
     public void initialize(){
@@ -51,10 +50,10 @@ public class ControllerOfChartWindow {
     }
 
     public void addYseries(ActionEvent e) {
-        addYseriesStatic(ySeriesSettings, barChart, lineChart, "Test1.csv", addYseriesField.getText());
+        addYseriesStatic(ySeriesSettings, barChart, lineChart, "Test1.csv", addYseriesField.getText(), chartWindow.toSave);
     }
 
-    public static void addYseriesStatic(VBox ySeriesSettings, BarChart barChart, LineChart lineChart, String path, String columnName) {
+    public static void addYseriesStatic(VBox ySeriesSettings, BarChart barChart, LineChart lineChart, String path, String columnName, StringBuilder toSave) {
         //check if already contains this series
         for(var tmp : UsefulFunctions.loopOverSceneGraph(ySeriesSettings, Label.class)) {
             if(tmp.getText().equals(columnName)) return;
@@ -90,13 +89,14 @@ public class ControllerOfChartWindow {
             }
         }
         ySeriesSettings.getChildren().add(oneSeriesSettings);
+        toSave.append(path).append(";").append(columnName).append("\n");
     }
 
 
     public void handleSaveButtonPressed(ActionEvent event){
         Stage newStage = new Stage();
         newStage.initModality(Modality.APPLICATION_MODAL);
-        SaveWindow saveWindow = new SaveWindow();
+        SaveWindow saveWindow = new SaveWindow(chartWindow);
         saveWindow.display(newStage);
         newStage.showAndWait();
     }

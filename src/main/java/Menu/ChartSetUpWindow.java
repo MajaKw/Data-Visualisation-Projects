@@ -14,7 +14,7 @@ public class ChartSetUpWindow {
     public static void display(Stage stage){
         // load the .fxml file created in Scene Builder
         try {
-            Parent root = FXMLLoader.load(ChartSetUpWindow.class.getResource("ChartSetUpWindow.fxml"));
+            Parent root = FXMLLoader.load(ChartSetUpWindow.class.getResource("NewChartSetUpWindow.fxml"));
             Scene scene = new Scene(root);
             if(Settings.isDarkMode){
                 scene.getStylesheets().add("DarkMode.css");

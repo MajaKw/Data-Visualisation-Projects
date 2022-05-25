@@ -14,11 +14,14 @@ import java.io.IOException;
 
 public class SaveWindowController {
 
+    ChartWindow chartWindow;
+
     @FXML
     private TextField name;
 
     @FXML
     private Label error;
+
 
 
     public void handleGoBackButtonPressed(ActionEvent event){
@@ -46,8 +49,8 @@ public class SaveWindowController {
             File newFile = new File("src/main/resources/Saved/" + pathToSave);
             newFile.createNewFile();
             FileWriter fileWriter = new FileWriter(newFile);
-            System.out.println(ChartWindow.toSave);
-            fileWriter.write(ChartWindow.toSave.toString());
+            //System.out.println(chartWindow.toSave);
+            fileWriter.write(chartWindow.toSave.toString());
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

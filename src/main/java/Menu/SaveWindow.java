@@ -10,20 +10,29 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class SaveWindow {
-    void display(Stage stage){
+
+    private ChartWindow chartWindow;
+
+    SaveWindow(ChartWindow chartWindow) {
+        this.chartWindow = chartWindow;
+    }
+
+    void display(Stage stage) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(("SaveWindow.fxml"))));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(("SaveWindow.fxml")));
+            root = loader.load();
+            SaveWindowController controller =  loader.getController();
+            controller.chartWindow=chartWindow;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        Scene scene = new Scene(root,373,168);
-        if(Settings.isDarkMode){
+        Scene scene = new Scene(root, 373, 168);
+        if (Settings.isDarkMode) {
             scene.getStylesheets().add("DarkMode.css");
-        }
-        else {
+        } else {
             scene.getStylesheets().add("LightMode.css");
         }
         stage.setResizable(false);

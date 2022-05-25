@@ -1,6 +1,7 @@
 package MainMenu;
 
 import Menu.ChartWindow;
+import Menu.ControllerOfChartWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,21 +62,34 @@ public class OpenProject {
             error.setText("There is no chart saved");
             return;
         }
+        File toRead = null;
         for (File f : savedContents) {
-            System.out.println(f.getName());
-            if (f.getName().equals( pathToLoad)) {
-                try {
-                    BufferedReader reader = new BufferedReader(new FileReader(f));
-                    String line = reader.readLine();
-                    String[] start = line.split(";");
-                    ChartWindow chartWindow = new ChartWindow();
-                    chartWindow.showChartWindow(start[0],start[1],null);
-                } catch (Exception e) {
-                    error.setText("Something went wrong");
-                    return;
-                }
-
+            if (f.getName().equals(pathToLoad)) {
+                toRead = f;
+                break;
             }
         }
+        if(toRead==null){
+            error.setText("There is no chart saved with that name");
+            return;
+        }
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(toRead));
+            String line = reader.readLine();
+            String[] commands = line.split(";");
+            ChartWindow chartWindow = new ChartWindow();
+            chartWindow.showChartWindow(commands[0], commands[1], null);
+            while((line = reader.readLine())!=null){
+                commands = line.split(";");
+                ControllerOfChartWindow.addYseriesStatic(chartWindow.controller.ySeriesSettings,chartWindow.controller.barChart,chartWindow.controller.lineChart,commands[0],commands[1],chartWindow.toSave);
+                //ControllerOfChartWindow.addYseriesStatic(ySeriesSettings, barChart, lineChart, path, yAxis,toSave);
+
+            }
+        } catch (Exception e) {
+            error.setText("Something went wrong");
+            return;
+        }
+
+
     }
 }

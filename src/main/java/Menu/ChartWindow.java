@@ -21,17 +21,22 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ChartWindow {
-    public static StringBuilder toSave;
+    public StringBuilder toSave;
     public BarChart barChart;
     public LineChart lineChart;
     public Parent root;
+
+    public ControllerOfChartWindow controller;
 
     public Parent getRoot() { return root; }
 
     public void showChartWindow(String xAxis, String yAxis, String zAxis){
         Parent root = null;
         try {
-            root = FXMLLoader.load(ChartSetUpWindow.class.getResource("ChartWindow.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ChartSetUpWindow.class.getResource("ChartWindow.fxml"));
+            root = fxmlLoader.load();
+            controller = fxmlLoader.getController();
+            controller.chartWindow=this;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,15 +45,13 @@ public class ChartWindow {
         barChart = UsefulFunctions.loopOverSceneGraph(root, BarChart.class).get(0);
 
         toSave = new StringBuilder();
-        toSave.append(xAxis).append(";").append(yAxis).append("\n");
-        System.out.println(toSave);
 
         // populating charts with data and ySeriesSettings
         String path = "Test1.csv"; // path to file will be deduced by xAxis variable?
         int yAxisIndex = UsefulFunctions.getColumnIndex(path, yAxis);
         if(yAxisIndex < 0) return;
         VBox ySeriesSettings = UsefulFunctions.loopOverSceneGraph(root, VBox.class).get(0);
-        ControllerOfChartWindow.addYseriesStatic(ySeriesSettings, barChart, lineChart, path, yAxis);
+        ControllerOfChartWindow.addYseriesStatic(ySeriesSettings, barChart, lineChart, path, yAxis,toSave);
 
         Scene scene = new Scene(root);
         if(Settings.isDarkMode){

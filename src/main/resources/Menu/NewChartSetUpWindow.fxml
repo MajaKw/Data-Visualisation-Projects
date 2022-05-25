@@ -49,12 +49,12 @@
                <children>
                   <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="26.0" prefWidth="450.0" text="X-axis">
                      <graphic>
-                        <TextField text="asdf" fx:id="xAxisInputField" />
+                        <TextField onKeyPressed="#search" fx:id="xAxisInputField" />
                      </graphic>
                   </Label>
                   <Label contentDisplay="RIGHT" text="Y-axis">
                      <graphic>
-                        <TextField fx:id="yAxisInputField" text="asdf" />
+                        <TextField fx:id="yAxisInputField" onKeyPressed="#search2" />
                      </graphic>
                   </Label>
                   <Label fx:id="zAxisInputLabel" contentDisplay="RIGHT" text="Z-axis">
