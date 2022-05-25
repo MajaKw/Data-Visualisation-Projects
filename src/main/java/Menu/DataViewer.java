@@ -1,5 +1,6 @@
 package Menu;
 
+import MainMenu.Settings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -138,6 +139,12 @@ public class DataViewer {
         layout.getChildren().add(list);
         Scene scene = new Scene(layout);
         scene.getStylesheets().add((new File("src/main/java/res/style_viewer.css")).toURI().toString());
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
         window.setScene(scene);
         window.showAndWait();
     }

@@ -47,17 +47,32 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="toImportDataButton" mnemonicParsing="false" onAction="#handleImportDataButtonPressed" prefHeight="45.0" prefWidth="200.0" text="Import Data">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
+                  <HBox fx:id="data" alignment="CENTER">
+                     <children>
+                     <Button fx:id="toImportDataButton" mnemonicParsing="false" onAction="#handleImportDataButtonPressed" prefHeight="45.0" prefWidth="100.0" text="Import">
+                        <font>
+                           <Font size="15.0" />
+                        </font>
+                        <VBox.margin>
+                           <Insets top="5.0" />
+                        </VBox.margin>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                   </Button>
+                        <Button fx:id="toViewDataButton" mnemonicParsing="false" onAction="#handleViewerDataButtonPressed" prefHeight="45.0" prefWidth="100.0" text="View">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
                   <Button fx:id="toSetingsButton" mnemonicParsing="false" onAction="#handleSettingsButtonPressed" prefHeight="45.0" prefWidth="200.0" text="Settings">
                      <font>
                         <Font size="15.0" />
