@@ -1,14 +1,19 @@
 package Menu;
 
 import DataManagement.Main;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class ControllerOfChartWindow {
     @FXML
@@ -51,8 +56,12 @@ public class ControllerOfChartWindow {
         String path = "Test1.csv"; // should it be deduced from columnName?
         int columnIndex = UsefulFunctions.getColumnIndex(path, columnName);
         if(columnIndex < 0) return; // check if specified column exists
-        barChart.getData().addAll(Main.getSeries(path, columnIndex));
-        lineChart.getData().addAll(Main.getSeries(path, columnIndex));
+
+        var s = Main.getSeries(path, columnIndex);
+        var s2 = Main.getSeries(path, columnIndex);
+        s[0].setName(columnName); s2[0].setName(columnName);
+        barChart.getData().addAll(s);
+        lineChart.getData().addAll(s2);
 
         // adding HBox with this series settings controls
         HBox oneSeriesSettings = null;
@@ -63,8 +72,25 @@ public class ControllerOfChartWindow {
         }
         for(var tmp2 : oneSeriesSettings.getChildren()) {
             if(tmp2 instanceof Label) ((Label)tmp2).setText(columnName);
-            if(tmp2 instanceof ComboBox<?>) ((ComboBox)tmp2).getItems().addAll(ChartWindow.seriesColors);
+            if(tmp2 instanceof ColorPicker) {
+                ((ColorPicker)tmp2).setValue(Color.RED);
+                ((ColorPicker)tmp2).valueProperty().addListener(new ChangeListener<Color>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Color> observableValue, Color color, Color t1) {
+                            barChart.setStyle("CHART_COLOR_"+(columnIndex+1)+": "+colorFormat(((ColorPicker)tmp2).getValue())+";");
+                            lineChart.setStyle("CHART_COLOR_"+(columnIndex+1)+": "+colorFormat(((ColorPicker)tmp2).getValue())+";");
+                    }
+                });
+            }
         }
         ySeriesSettings.getChildren().add(oneSeriesSettings);
+    }
+
+    public static String colorFormat(Color c) {
+        int r = (int) (255 * c.getRed()) ;
+        int g = (int) (255 * c.getGreen()) ;
+        int b = (int) (255 * c.getBlue()) ;
+
+        return String.format("#%02x%02x%02x", r, g, b);
     }
 }
