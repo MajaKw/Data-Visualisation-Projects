@@ -1,8 +1,7 @@
 package Menu;
 
 import MainMenu.Settings;
-import app.App;
-import app.TwoDimensionalBarChart;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

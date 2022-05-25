@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 
 public class ChartWindow {
     public static ObservableList<String> seriesColors = FXCollections.observableArrayList("Red", "Green", "Blue");
+    static StringBuilder toSave;
 
     public static void showChartWindow(String xAxis, String yAxis, String zAxis){
         Parent root = null;
@@ -37,18 +38,17 @@ public class ChartWindow {
         if(yAxisIndex < 0) return;
 
         // searching for charts in scene graph and filling it with data
+
         for(var tmp : UsefulFunctions.loopOverSceneGraph(root, LineChart.class)){
-            var s = Main.getSeries(path, yAxisIndex);
-            s[0].setName(yAxis);
-            tmp.getData().addAll(s);
+            tmp.getData().addAll(Main.getSeries(path, yAxisIndex));
         }
         for(var tmp : UsefulFunctions.loopOverSceneGraph(root, BarChart.class)){
-            var s = Main.getSeries(path, yAxisIndex);
-            s[0].setName(yAxis);
-            tmp.getData().addAll(s);
+            tmp.getData().addAll(Main.getSeries(path, yAxisIndex));
         }
-
-        for(var tmp : UsefulFunctions.loopOverSceneGraph(root, VBox.class)) {
+        toSave = new StringBuilder();
+        toSave.append(xAxis).append(";").append(yAxis).append("\n");
+        System.out.println(toSave);
+        for(var tmp : UsefulFunctions.loopOverSceneGraph(root, VBox.class)){
             HBox oneSeriesSettings = null;
             try {
                 oneSeriesSettings = FXMLLoader.load(ChartSetUpWindow.class.getResource("oneSeriesSettings.fxml"));
@@ -77,8 +77,6 @@ public class ChartWindow {
         else {
             scene.getStylesheets().add("LightMode.css");
         }
-//        this .css file is not ready yet
-//        scene.getStylesheets().add("ChartStyling.css");
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();

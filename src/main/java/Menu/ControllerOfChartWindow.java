@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
@@ -13,6 +14,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
 public class ControllerOfChartWindow {
@@ -84,6 +87,15 @@ public class ControllerOfChartWindow {
             }
         }
         ySeriesSettings.getChildren().add(oneSeriesSettings);
+    }
+
+
+    public void handleSaveButtonPressed(ActionEvent event){
+        Stage newStage = new Stage();
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        SaveWindow saveWindow = new SaveWindow();
+        saveWindow.display(newStage);
+        newStage.showAndWait();
     }
 
     public static String colorFormat(Color c) {
