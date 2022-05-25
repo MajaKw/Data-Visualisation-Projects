@@ -76,14 +76,15 @@ public class ControllerOfChartWindow {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
+        int seriesNumber = ySeriesSettings.getChildren().size()+1;
         for(var tmp2 : oneSeriesSettings.getChildren()) {
             if(tmp2 instanceof Label) ((Label)tmp2).setText(columnName);
             if(tmp2 instanceof ColorPicker) {
                 ((ColorPicker)tmp2).valueProperty().addListener(new ChangeListener<Color>() {
                     @Override
                     public void changed(ObservableValue<? extends Color> observableValue, Color color, Color t1) {
-                            barChart.setStyle("CHART_COLOR_"+(columnIndex+1)+": "+colorFormat(((ColorPicker)tmp2).getValue())+";");
-                            lineChart.setStyle("CHART_COLOR_"+(columnIndex+1)+": "+colorFormat(((ColorPicker)tmp2).getValue())+";");
+                            barChart.setStyle("CHART_COLOR_"+seriesNumber+": "+colorFormat(((ColorPicker)tmp2).getValue())+";");
+                            lineChart.setStyle("CHART_COLOR_"+seriesNumber+": "+colorFormat(((ColorPicker)tmp2).getValue())+";");
                     }
                 });
             }
