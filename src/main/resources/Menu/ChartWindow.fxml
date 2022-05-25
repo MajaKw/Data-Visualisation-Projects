@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartWindow">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartWindow">
    <children>
       <VBox fx:id="ySeriesSettings" layoutX="444.0" layoutY="123.0" prefHeight="200.0" prefWidth="160.0" />
       <BarChart fx:id="barChart" layoutY="23.0" prefHeight="400.0" prefWidth="433.0">

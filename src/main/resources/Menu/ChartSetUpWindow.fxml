@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="377.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartSetUpWindow">
+<AnchorPane prefHeight="377.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartSetUpWindow">
    <children>
       <VBox alignment="CENTER" layoutX="12.0" layoutY="146.0" spacing="10.0">
          <children>

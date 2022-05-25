@@ -11,7 +11,6 @@ module searchEngine {
     exports Menu;
     exports MainMenu;
     exports searchEngine;
-    exports MainMenu;
     exports DataManagement;
 
     opens Menu to

@@ -12,8 +12,6 @@ public class Main {
         if(!hashMap.containsKey(path)){
             hashMap.put(path,new SeriesCollector(path));
         }
-        else{
-        }
         return hashMap.get(path).getSeries(columns);
     }
 

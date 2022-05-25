@@ -26,6 +26,8 @@ public class MainMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setMinHeight(425);
+        stage.setMinWidth(600);
         show(stage);
     }
 
