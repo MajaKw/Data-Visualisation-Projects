@@ -1,6 +1,7 @@
 package MainMenu;
 
 import Menu.ChartSetUpWindow;
+import Menu.DataViewer;
 import Menu.DiagramWindow;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -67,6 +68,13 @@ public class MainMenu extends Application {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+    }
+    public void handleViewerDataButtonPressed(ActionEvent event){
+        try {
+            new DataViewer().display("Upload window");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void handleSettingsButtonPressed(ActionEvent event){
