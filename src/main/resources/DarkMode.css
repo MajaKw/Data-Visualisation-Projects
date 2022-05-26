@@ -103,3 +103,8 @@
 .chart-plot-background{
 -fx-background-color: #778da9;
 }
+
+.color-picker{
+-fx-background-color:#1b263b;
+-fx-text-fill: #415a77;
+}
