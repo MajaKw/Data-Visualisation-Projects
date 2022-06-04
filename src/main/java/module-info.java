@@ -7,6 +7,7 @@ module searchEngine {
     requires java.sql;
     requires java.desktop;
     requires com.google.common;
+    requires java.prefs;
 
     exports Menu;
     exports MainMenu;

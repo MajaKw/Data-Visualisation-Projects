@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="168.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainMenu.ChooseWorkingDirectory">
+   <children>
+      <Button layoutX="110.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleChooseButtonPressed" text="Choose working directory" />
+   </children>
+</AnchorPane>
