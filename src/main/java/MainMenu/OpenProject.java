@@ -56,7 +56,7 @@ public class OpenProject {
             error.setText("Wrong input");
             return;
         }
-        File savedFolder = new File("src/main/resources/Saved/");
+        File savedFolder = new File( MainMenu.pathToWorkingDirectory + "/Saved/");
         File[] savedContents = savedFolder.listFiles();
         if (savedContents == null) {
             error.setText("There is no chart saved");

@@ -1,5 +1,6 @@
 package Menu;
 
+import MainMenu.MainMenu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -35,7 +36,7 @@ public class SaveWindowController {
             error.setText("Wrong input");
             return;
         }
-        File savedFolder = new File("src/main/resources/Saved");
+        File savedFolder = new File(MainMenu.pathToWorkingDirectory + "/Saved");
         File[] savedContents = savedFolder.listFiles();
         if(savedContents!=null) {
             for (File f : savedContents) {
@@ -46,7 +47,7 @@ public class SaveWindowController {
             }
         }
         try {
-            File newFile = new File("src/main/resources/Saved/" + pathToSave);
+            File newFile = new File(MainMenu.pathToWorkingDirectory + "/Saved/" + pathToSave);
             newFile.createNewFile();
             FileWriter fileWriter = new FileWriter(newFile);
             //System.out.println(chartWindow.toSave);

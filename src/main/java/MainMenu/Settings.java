@@ -6,17 +6,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.prefs.Preferences;
 
 public class Settings {
     public static boolean isDarkMode = true;
 
     @FXML
     Button changeButton;
+
 
     void show(Stage stage){
         Parent root = null;
@@ -47,4 +51,15 @@ public class Settings {
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         show(stage);
     }
+
+    public void handleChangeWorkingDirectoryButtonPressed(ActionEvent event){
+        Stage newStage = new Stage();
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        ChooseWorkingDirectory chooseWorkingDirectory = new ChooseWorkingDirectory();
+        chooseWorkingDirectory.show(newStage);
+        newStage.showAndWait();
+    }
+
+
+
 }
