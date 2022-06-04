@@ -28,10 +28,8 @@ public class ChartWindow {
 
     public ControllerOfChartWindow controller;
 
-    public Parent getRoot() { return root; }
-
     public void showChartWindow(String xAxis, String yAxis, String zAxis){
-        Parent root = null;
+        root = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ChartSetUpWindow.class.getResource("ChartWindow.fxml"));
             root = fxmlLoader.load();
@@ -47,11 +45,13 @@ public class ChartWindow {
         toSave = new StringBuilder();
 
         // populating charts with data and ySeriesSettings
-        String path = "Test1.csv"; // path to file will be deduced by xAxis variable?
-        int yAxisIndex = UsefulFunctions.getColumnIndex(path, yAxis);
+        // using data location
+        // assuming that xAxis is in the format <pathToFile>|<columnName>
+        String path = xAxis.split("\\|")[0];
+        int yAxisIndex = UsefulFunctions.getColumnIndex(path, yAxis.split("\\|")[1]);
         if(yAxisIndex < 0) return;
         VBox ySeriesSettings = UsefulFunctions.loopOverSceneGraph(root, VBox.class).get(0);
-        ControllerOfChartWindow.addYseriesStatic(ySeriesSettings, barChart, lineChart, path, yAxis,toSave);
+        ControllerOfChartWindow.addYseriesStatic(ySeriesSettings, barChart, lineChart, path, yAxis.split("\\|")[1], toSave);
 
         Scene scene = new Scene(root);
         if(Settings.isDarkMode){
