@@ -24,6 +24,7 @@ public class UsefulFunctions {
     }
 
     public static int getColumnIndex(String path, String columnName) {
+        //using data location
         String file ="src/main/resources/Uploaded/"+path;
         int index = -1;
         try {
@@ -37,5 +38,20 @@ public class UsefulFunctions {
             e.printStackTrace();
         }
         return index-1;
+    }
+
+    public static String getColumnName(String path, int idx) {
+        // using data location
+        String file ="src/main/resources/Uploaded/"+path;
+        String columnName = null;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            String[] names = line.split(";");
+            columnName = names[idx];
+        } catch(Exception e) {
+            if(e.getClass() != ArrayIndexOutOfBoundsException.class) e.printStackTrace();
+        }
+        return columnName;
     }
 }

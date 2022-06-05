@@ -6,52 +6,59 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartWindow">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartWindow">
    <right>
-      <VBox maxWidth="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+      <VBox prefWidth="210.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="addYseriesField">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" top="10.0" />
-               </VBox.margin>
-            </TextField>
-            <Button fx:id="addYseriesButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addYseries" text="Add Y-series">
+            <VBox VBox.vgrow="NEVER">
                <VBox.margin>
                   <Insets left="58.0" right="58.0" top="1.0" />
                </VBox.margin>
-            </Button>
-            <VBox fx:id="ySeriesSettings" prefHeight="351.0" prefWidth="150.0">
+               <children>
+                  <ComboBox fx:id="addYseriesComboBox" editable="true" onKeyReleased="#ComboBoxTypingIn" />
+                  <Button fx:id="addYseriesButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addYseries" text="Add Y-series" />
+               </children>
+            </VBox>
+            <VBox fx:id="ySeriesSettings" VBox.vgrow="ALWAYS">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </VBox>
-            <VBox alignment="BOTTOM_CENTER" maxHeight="200.0" minHeight="0.0" prefHeight="200.0" prefWidth="150.0">
+            <VBox alignment="BOTTOM_CENTER" VBox.vgrow="NEVER">
                <children>
-                  <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#handleSaveButtonPressed" text="Save">
+                  <Button fx:id="SaveButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSaveButtonPressed" text="Save">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Button>
-                  <RadioButton fx:id="barChartButton" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Bar chart">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="BarOrLine" />
-                     </toggleGroup>
+                  <HBox alignment="CENTER">
                      <VBox.margin>
                         <Insets bottom="2.0" />
                      </VBox.margin>
-                  </RadioButton>
-                  <RadioButton fx:id="lineCharButton" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Line chart" toggleGroup="$BarOrLine">
+                     <children>
+                        <RadioButton fx:id="barChartButton" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Bar chart">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="BarOrLine" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER">
                      <VBox.margin>
                         <Insets bottom="20.0" />
                      </VBox.margin>
-                  </RadioButton>
+                     <children>
+                        <RadioButton fx:id="lineCharButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Line chart" toggleGroup="$BarOrLine" />
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
                   <Insets />

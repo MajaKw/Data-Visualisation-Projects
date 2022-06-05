@@ -3,17 +3,23 @@ package Menu;
 import DataManagement.Main;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerOfChartWindow {
     ChartWindow chartWindow;
@@ -22,13 +28,15 @@ public class ControllerOfChartWindow {
     @FXML
     public LineChart lineChart;
     @FXML
-    TextField addYseriesField;
-    @FXML
     Button addYseriesButton;
     @FXML
     RadioButton barChartButton, lineCharButton;
     @FXML
     public VBox ySeriesSettings;
+    @FXML
+    ComboBox<String> addYseriesComboBox;
+
+    private List<String> availableYseries = new ArrayList<>();
 
 
     @FXML
@@ -36,6 +44,29 @@ public class ControllerOfChartWindow {
         lineChart.setVisible(false);
         barChart.setVisible(true);
         barChartButton.setSelected(true);
+
+//        addYseriesComboBox.focusedProperty().addListener((obs, oldVal, newVal) ->
+//        {
+//            addYseriesComboBox.setVisible(newVal);
+//            addYseriesComboBox.setManaged(newVal);
+//        });
+//        addYseriesComboBox.setOnMouseClicked(event -> {
+//            String File = addYseriesComboBox.getSelectionModel().getSelectedItem();
+//            addYseriesField.setText(File);
+//            addYseriesComboBox.getSelectionModel().clearSelection();
+//        });
+
+        // using data location
+        // searching for available xColumns and yColumns
+        var filePaths = new ArrayList<String>();
+        filePaths.add("Test1.csv");
+        ControllerOfChartSetUpWindow.fillXYColumns(new ArrayList<>(), availableYseries, filePaths);
+        addYseriesComboBox.getItems().addAll(availableYseries);
+    }
+
+    public void ComboBoxTypingIn(KeyEvent k) {
+        addYseriesComboBox.getItems().clear();
+        addYseriesComboBox.getItems().addAll(ControllerOfChartSetUpWindow.searchList(addYseriesComboBox.getEditor().getText(),availableYseries));
     }
 
     public void bar_LineSwitch(ActionEvent e) {
@@ -50,7 +81,12 @@ public class ControllerOfChartWindow {
     }
 
     public void addYseries(ActionEvent e) {
-        addYseriesStatic(ySeriesSettings, barChart, lineChart, "Test1.csv", addYseriesField.getText(), chartWindow.toSave);
+        // using data location
+        ArrayList<String> filePaths = new ArrayList<>();
+        filePaths.add("Test1.csv");
+        for(var path : filePaths) {
+            addYseriesStatic(ySeriesSettings, barChart, lineChart, path, addYseriesComboBox.getEditor().getText().split("\\|")[1], chartWindow.toSave);
+        }
     }
 
     public static void addYseriesStatic(VBox ySeriesSettings, BarChart barChart, LineChart lineChart, String path, String columnName, StringBuilder toSave) {
@@ -89,6 +125,7 @@ public class ControllerOfChartWindow {
             }
         }
         ySeriesSettings.getChildren().add(oneSeriesSettings);
+
         toSave.append(path).append(";").append(columnName).append("\n");
     }
 
