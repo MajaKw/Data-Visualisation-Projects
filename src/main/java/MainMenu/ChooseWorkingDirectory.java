@@ -1,6 +1,4 @@
 package MainMenu;
-
-import DataManagement.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,8 +11,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.prefs.Preferences;
@@ -26,8 +22,6 @@ public class ChooseWorkingDirectory {
 
         if(selectedDirectory == null){
             return;
-        }else{
-            System.out.println(selectedDirectory.getAbsolutePath());
         }
         File saved = new File(selectedDirectory.getAbsolutePath() + "/Saved");
         File uploaded = new File(selectedDirectory.getAbsolutePath() + "/Uploaded");
