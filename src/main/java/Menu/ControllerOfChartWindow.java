@@ -3,8 +3,6 @@ package Menu;
 import DataManagement.Main;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -81,20 +79,21 @@ public class ControllerOfChartWindow {
     }
 
     public void addYseries(ActionEvent e) {
+        String inputSeriesName = addYseriesComboBox.getEditor().getText();
+        if(!availableYseries.contains(inputSeriesName)) return;
         // using data location
         ArrayList<String> filePaths = new ArrayList<>();
         filePaths.add("Test1.csv");
         for(var path : filePaths) {
-            addYseriesStatic(ySeriesSettings, barChart, lineChart, path, addYseriesComboBox.getEditor().getText().split("\\|")[1], chartWindow.toSave);
+            addYseriesStaticly(ySeriesSettings, barChart, lineChart, path, addYseriesComboBox.getEditor().getText().split("\\|")[1], chartWindow.toSave);
         }
     }
 
-    public static void addYseriesStatic(VBox ySeriesSettings, BarChart barChart, LineChart lineChart, String path, String columnName, StringBuilder toSave) {
+    public static void addYseriesStaticly(VBox ySeriesSettings, BarChart barChart, LineChart lineChart, String path, String columnName, StringBuilder toSave) {
         //check if already contains this series
         for(var tmp : UsefulFunctions.loopOverSceneGraph(ySeriesSettings, Label.class)) {
             if(tmp.getText().equals(columnName)) return;
         }
-        path = "Test1.csv"; // should it be deduced from columnName?
         int columnIndex = UsefulFunctions.getColumnIndex(path, columnName);
         if(columnIndex < 0) return; // check if specified column exists
 
@@ -115,11 +114,29 @@ public class ControllerOfChartWindow {
         for(var tmp2 : oneSeriesSettings.getChildren()) {
             if(tmp2 instanceof Label) ((Label)tmp2).setText(columnName);
             if(tmp2 instanceof ColorPicker) {
-                ((ColorPicker)tmp2).valueProperty().addListener(new ChangeListener<Color>() {
+                ((ColorPicker)tmp2).setValue(Color.RED);
+                String style = barChart.getStyle() + "CHART_COLOR_" + seriesNumber + ": " + colorFormat(((ColorPicker) tmp2).getValue()) + ";";
+//                System.out.println("----setting style---");
+//                System.out.println(style);
+//                System.out.println("-------------------------------------------");
+                barChart.setStyle(style); lineChart.setStyle(style);
+                ((ColorPicker)tmp2).valueProperty().addListener(new ChangeListener<>() {
                     @Override
                     public void changed(ObservableValue<? extends Color> observableValue, Color color, Color t1) {
-                            barChart.setStyle("CHART_COLOR_"+seriesNumber+": "+colorFormat(((ColorPicker)tmp2).getValue())+";");
-                            lineChart.setStyle("CHART_COLOR_"+seriesNumber+": "+colorFormat(((ColorPicker)tmp2).getValue())+";");
+//                        System.out.println(barChart.getStyle());
+                        String[] style = barChart.getStyle().split(";");
+                        StringBuilder seriesColor = new StringBuilder(style[seriesNumber-1]);
+//                        System.out.println("Current --- " + seriesColor);
+                        seriesColor.replace(seriesColor.indexOf("#"), seriesColor.length(), colorFormat(t1));
+//                        System.out.println("New color --- " + seriesColor + " vs " + colorFormat(t1));
+                        style[seriesNumber-1] = seriesColor.toString();
+                        StringBuilder finalStyle = new StringBuilder();
+                        for (String value : style) finalStyle.append(value + ";");
+//                        System.out.println("----setting style---");
+//                        System.out.println(finalStyle);
+//                        System.out.println("-------------------------------------------");
+                        barChart.setStyle(finalStyle.toString());
+                        lineChart.setStyle(finalStyle.toString());
                     }
                 });
             }

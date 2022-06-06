@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -81,7 +80,7 @@ public class OpenProject {
             chartWindow.showChartWindow(commands[0], commands[1], null);
             while((line = reader.readLine())!=null){
                 commands = line.split(";");
-                ControllerOfChartWindow.addYseriesStatic(chartWindow.controller.ySeriesSettings,chartWindow.controller.barChart,chartWindow.controller.lineChart,commands[0],commands[1],chartWindow.toSave);
+                ControllerOfChartWindow.addYseriesStaticly(chartWindow.controller.ySeriesSettings,chartWindow.controller.barChart,chartWindow.controller.lineChart,commands[0],commands[1],chartWindow.toSave);
                 //ControllerOfChartWindow.addYseriesStatic(ySeriesSettings, barChart, lineChart, path, yAxis,toSave);
 
             }

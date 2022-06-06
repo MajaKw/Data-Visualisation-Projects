@@ -1,23 +1,12 @@
 package Menu;
 
-import DataManagement.Main;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import MainMenu.Settings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ChartWindow {
@@ -50,8 +39,8 @@ public class ChartWindow {
         String path = xAxis.split("\\|")[0];
         int yAxisIndex = UsefulFunctions.getColumnIndex(path, yAxis.split("\\|")[1]);
         if(yAxisIndex < 0) return;
-        VBox ySeriesSettings = UsefulFunctions.loopOverSceneGraph(root, VBox.class).get(0);
-        ControllerOfChartWindow.addYseriesStatic(ySeriesSettings, barChart, lineChart, path, yAxis.split("\\|")[1], toSave);
+        VBox ySeriesSettings = UsefulFunctions.loopOverSceneGraph(root, VBox.class).get(1);
+        ControllerOfChartWindow.addYseriesStaticly(ySeriesSettings, barChart, lineChart, path, yAxis.split("\\|")[1], toSave);
 
         Scene scene = new Scene(root);
         if(Settings.isDarkMode){
