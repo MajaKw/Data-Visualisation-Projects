@@ -3,13 +3,16 @@ package Menu;
 import DataManagement.Main;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -97,11 +100,11 @@ public class ControllerOfChartWindow {
         int columnIndex = UsefulFunctions.getColumnIndex(path, columnName);
         if(columnIndex < 0) return; // check if specified column exists
 
-        var s = Main.getSeries(path, columnIndex);
-        var s2 = Main.getSeries(path, columnIndex);
-        s[0].setName(columnName); s2[0].setName(columnName);
-        barChart.getData().addAll(s);
-        lineChart.getData().addAll(s2);
+        var seriesForBar = Main.getSeries(path, columnIndex);
+        var seriesForLine = Main.getSeries(path, columnIndex);
+        seriesForLine[0].setName(columnName); seriesForBar[0].setName(columnName);
+        barChart.getData().addAll(seriesForBar);
+        lineChart.getData().addAll(seriesForLine);
 
         // adding HBox with this series settings controls
         HBox oneSeriesSettings = null;
@@ -110,37 +113,44 @@ public class ControllerOfChartWindow {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
+        Label seriesLabel = UsefulFunctions.loopOverSceneGraph(oneSeriesSettings, Label.class).get(0);
+        ColorPicker seriesColorPicker = UsefulFunctions.loopOverSceneGraph(oneSeriesSettings, ColorPicker.class).get(0);
+        ToggleButton showHideButton = UsefulFunctions.loopOverSceneGraph(oneSeriesSettings, ToggleButton.class).get(0);
         int seriesNumber = ySeriesSettings.getChildren().size()+1;
-        for(var tmp2 : oneSeriesSettings.getChildren()) {
-            if(tmp2 instanceof Label) ((Label)tmp2).setText(columnName);
-            if(tmp2 instanceof ColorPicker) {
-                ((ColorPicker)tmp2).setValue(Color.RED);
-                String style = barChart.getStyle() + "CHART_COLOR_" + seriesNumber + ": " + colorFormat(((ColorPicker) tmp2).getValue()) + ";";
-//                System.out.println("----setting style---");
-//                System.out.println(style);
-//                System.out.println("-------------------------------------------");
-                barChart.setStyle(style); lineChart.setStyle(style);
-                ((ColorPicker)tmp2).valueProperty().addListener(new ChangeListener<>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Color> observableValue, Color color, Color t1) {
-//                        System.out.println(barChart.getStyle());
-                        String[] style = barChart.getStyle().split(";");
-                        StringBuilder seriesColor = new StringBuilder(style[seriesNumber-1]);
-//                        System.out.println("Current --- " + seriesColor);
-                        seriesColor.replace(seriesColor.indexOf("#"), seriesColor.length(), colorFormat(t1));
-//                        System.out.println("New color --- " + seriesColor + " vs " + colorFormat(t1));
-                        style[seriesNumber-1] = seriesColor.toString();
-                        StringBuilder finalStyle = new StringBuilder();
-                        for (String value : style) finalStyle.append(value + ";");
-//                        System.out.println("----setting style---");
-//                        System.out.println(finalStyle);
-//                        System.out.println("-------------------------------------------");
-                        barChart.setStyle(finalStyle.toString());
-                        lineChart.setStyle(finalStyle.toString());
-                    }
-                });
+        seriesLabel.setText(columnName);
+
+        seriesColorPicker.setValue(Color.RED);
+        String style = barChart.getStyle() + "CHART_COLOR_" + seriesNumber + ": " + colorFormat(seriesColorPicker.getValue()) + ";";
+        barChart.setStyle(style); lineChart.setStyle(style);
+        seriesColorPicker.valueProperty().addListener((observableValue, color, t1) -> {
+            String[] style1 = barChart.getStyle().split(";");
+            StringBuilder seriesColor = new StringBuilder(style1[seriesNumber-1]);
+            seriesColor.replace(seriesColor.indexOf("#"), seriesColor.length(), colorFormat(t1));
+            style1[seriesNumber-1] = seriesColor.toString();
+            StringBuilder finalStyle = new StringBuilder();
+            for (String value : style1) finalStyle.append(value + ";");
+            barChart.setStyle(finalStyle.toString());
+            lineChart.setStyle(finalStyle.toString());
+        });
+
+        showHideButton.setOnMouseClicked(mouseEvent -> {
+            for(var tmp : lineChart.getData()) {
+                XYChart.Series series = (XYChart.Series) tmp;
+                if(series.getName().equals(seriesLabel.getText())) {
+                    series.getNode().setVisible(!showHideButton.isSelected());
+                    for(var x : series.getData())
+                        ((XYChart.Data)x).getNode().setVisible(!showHideButton.isSelected());
+                }
             }
-        }
+            for(var tmp : barChart.getData()) {
+                XYChart.Series series = (XYChart.Series) tmp;
+                if(series.getName().equals(seriesLabel.getText()))
+                    for(var x : series.getData())
+                        ((XYChart.Data)x).getNode().setVisible(!showHideButton.isSelected());
+            }
+        });
+
+
         ySeriesSettings.getChildren().add(oneSeriesSettings);
 
         toSave.append(path).append(";").append(columnName).append("\n");
