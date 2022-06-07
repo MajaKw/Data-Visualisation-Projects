@@ -1,5 +1,6 @@
 package Menu;
 
+import MainMenu.MainMenu;
 import MainMenu.Settings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -167,7 +168,7 @@ public class DiagramWindow {
 
     void table_row_save(ObservableList row_data, String file_name){
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Uploaded/"+comboBox.getValue()+"/"+file_name.replace("/","").replaceAll("[-+.^:/\\,]","")+".csv", true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(MainMenu.pathToWorkingDirectory + "/Uploaded/"+comboBox.getValue()+"/"+file_name.replace("/","").replaceAll("[-+.^:/\\,]","")+".csv", true));
             for (int j=0; j<row_data.size(); j++){
                 if (!hm.get("X").equals(Integer.toString(j)) && !hm.get("Y").equals(Integer.toString(j))&&!row_data.get(0).equals("---EOD---")){
                     continue;
@@ -273,7 +274,7 @@ public class DiagramWindow {
                 Object it = data_table.getItems().get(row);
                 String data = (String) col.getCellObservableValue(it).getValue();
                 try {
-                    JSONObject obj = (JSONObject) new JSONParser().parse(new FileReader("src/main/resources/categories.json"));
+                    JSONObject obj = (JSONObject) new JSONParser().parse(new FileReader(MainMenu.pathToWorkingDirectory + "/categories.json"));
                     JSONArray catar = (JSONArray) obj.get(comboBox.getValue());
                     if (catar.contains(String.format(path_format,comboBox.getValue(),data,textField2.getText()))){
                         error.setText("That metric already exists: "+String.format(path_format,comboBox.getValue(),data,textField2.getText()));
@@ -315,9 +316,9 @@ public class DiagramWindow {
                 labels.add("---EOD---");
                 if (!done2.contains(data)) {
                     table_row_save(labels, data);
-                    String filePath = "src/main/resources/Uploaded_files.json" ;
+                    String filePath = MainMenu.pathToWorkingDirectory +"/Uploaded_files.json" ;
                     save_to_json(filePath,data,false);
-                    String filePath2 = "src/main/resources/categories.json" ;
+                    String filePath2 =  MainMenu.pathToWorkingDirectory + "/categories.json" ;
                     save_to_json(filePath2,data,true);
                 }
                 done2.add(data);

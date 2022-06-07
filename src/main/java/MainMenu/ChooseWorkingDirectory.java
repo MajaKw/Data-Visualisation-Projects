@@ -10,6 +10,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,8 +26,10 @@ public class ChooseWorkingDirectory {
         }
         File saved = new File(selectedDirectory.getAbsolutePath() + "/Saved");
         File uploaded = new File(selectedDirectory.getAbsolutePath() + "/Uploaded");
+        File categories = new File(selectedDirectory.getAbsolutePath() + "/categories.json");
+        File uploadedFiles = new File(selectedDirectory.getAbsolutePath() + "/Uploaded_files.json");
 
-        if(saved.exists() || uploaded.exists()){
+        if(saved.exists() || uploaded.exists() || categories.exists() || uploadedFiles.exists()){
             if(!showAlert()){
                 return;
             }
@@ -37,6 +40,28 @@ public class ChooseWorkingDirectory {
         if(!uploaded.exists()){
             uploaded.mkdir();
         }
+        if(!categories.exists()){
+            try {
+                categories.createNewFile();
+                FileWriter fileWriter = new FileWriter(categories);
+                String toWrite ="{\"currency\":[],\"countries\":[]}\n";
+                fileWriter.write(toWrite);
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(!uploadedFiles.exists()){
+            try {
+                uploadedFiles.createNewFile();
+                FileWriter fileWriter = new FileWriter(uploadedFiles);
+                String toWrite ="{}";
+                fileWriter.write(toWrite);
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         MainMenu.pathToWorkingDirectory= selectedDirectory.getAbsolutePath();
         Preferences pref = Preferences.userNodeForPackage(MainMenu.class);
         pref.put(MainMenu.PREF_NAME, MainMenu.pathToWorkingDirectory);
@@ -45,7 +70,7 @@ public class ChooseWorkingDirectory {
     private static boolean showAlert(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Duplicate");
-        alert.setHeaderText("Selected folder contains Saved/Uploaded folders");
+        alert.setHeaderText("Selected folder contains Saved/Uploaded folders or some json files");
         alert.setContentText("If they weren't created by this application, there is no guarantee that application will work correctly");
         Optional<ButtonType> option = alert.showAndWait();
         return ButtonType.OK.equals(option.get());
