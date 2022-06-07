@@ -34,6 +34,9 @@ public class DiagramWindow {
     VBox layout_content = new VBox();
     TextField textField2 = new TextField();
     ComboBox<String> comboBox;
+    ComboBox<String> comboBox2;
+    ComboBox<String> comboBox3;
+
 
     String path_format = "%s.%s.%s";
 
@@ -169,14 +172,28 @@ public class DiagramWindow {
     void table_row_save(ObservableList row_data, String file_name){
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(MainMenu.pathToWorkingDirectory + "/Uploaded/"+comboBox.getValue()+"/"+file_name.replace("/","").replaceAll("[-+.^:/\\,]","")+".csv", true));
-            for (int j=0; j<row_data.size(); j++){
-                if (!hm.get("X").equals(Integer.toString(j)) && !hm.get("Y").equals(Integer.toString(j))&&!row_data.get(0).equals("---EOD---")){
-                    continue;
+            if (Integer.parseInt(hm.get("X"))<Integer.parseInt(hm.get("Y"))){
+                for (int j=0; j<row_data.size(); j++){
+                    if (!hm.get("X").equals(Integer.toString(j)) && !hm.get("Y").equals(Integer.toString(j))&&!row_data.get(0).equals("---EOD---")){
+                        continue;
+                    }
+                    if (j==Integer.parseInt(hm.get("Y"))){
+                        writer.append((String) row_data.get(j));
+                    }else{
+                        writer.append((String) row_data.get(j)+";");
+                    }
                 }
-                if (j==row_data.size()-1){
-                    writer.append((String) row_data.get(j));
-                }else{
-                    writer.append((String) row_data.get(j)+";");
+            } else{
+                for (int j=row_data.size()-1; j>-1; j--){
+                    System.out.println(row_data.get(j));
+                    if (!hm.get("X").equals(Integer.toString(j)) && !hm.get("Y").equals(Integer.toString(j))&&!row_data.get(0).equals("---EOD---")){
+                        continue;
+                    }
+                    if (j==Integer.parseInt(hm.get("Y"))){
+                        writer.append((String) row_data.get(j));
+                    }else{
+                        writer.append((String) row_data.get(j)+";");
+                    }
                 }
             }
             writer.append("\n");
@@ -289,9 +306,9 @@ public class DiagramWindow {
                     ObservableList<String> labels = FXCollections.observableArrayList();
                     for (int f = 0; f < row1.size(); f++){
                         if(Integer.toString(f).equals(hm.get("X"))){
-                            labels.add("X");
+                            labels.add("X|"+comboBox2.getValue());
                         }else if(Integer.toString(f).equals(hm.get("Y"))){
-                            labels.add("Y");
+                            labels.add("Y|"+comboBox3.getValue());
                         }else{
                             labels.add("-");
                         }
@@ -364,14 +381,27 @@ public class DiagramWindow {
         vblabel.getChildren().addAll(label1, textField);
         Label label2 = new Label("Add metric name");
         ObservableList<String> options = FXCollections.observableArrayList();
+        ObservableList<String> options2 = FXCollections.observableArrayList();
+        options2.add("YEAR");
+        options2.add("NUMBER");
+        options2.add("PERCENT");
+        options2.add("LABEL");
         VBox vblabel2 = new VBox();
         VBox vblabel3 = new VBox();
+        VBox vblabel4 = new VBox();
+        VBox vblabel5 = new VBox();
         Label label3 = new Label("Categories name");
+        Label label4 = new Label("X unit: ");
+        Label label5 = new Label("Y unit: ");
         vblabel2.getChildren().addAll(label2, textField2);
         options.add("countries");
         options.add("currency");
         comboBox = new ComboBox(options);
+        comboBox2 = new ComboBox(options2);
+        comboBox3 = new ComboBox(options2);
         vblabel3.getChildren().addAll(label3, comboBox);
+        vblabel4.getChildren().addAll(label4, comboBox2);
+        vblabel5.getChildren().addAll(label5, comboBox3);
         textField.setText("File");
         Button button = new Button("Save the file");
         button.setOnAction(actionEvents ->  {
@@ -385,9 +415,9 @@ public class DiagramWindow {
             ObservableList row1 = (ObservableList)table_data.get(0);
             for (int i = 0; i < row1.size(); i++){
                 if(Integer.toString(i).equals(hm.get("X"))){
-                    labels.add("X");
+                    labels.add("X|"+comboBox2.getValue());
                 }else if(Integer.toString(i).equals(hm.get("Y"))){
-                    labels.add("Y");
+                    labels.add("Y|"+comboBox3.getValue());
                 }else{
                     labels.add("-");
                 }
@@ -403,7 +433,7 @@ public class DiagramWindow {
             window.close();
         });
 
-        settings.getChildren().addAll(vblabel,vblabel2,vblabel3);
+        settings.getChildren().addAll(vblabel,vblabel2,vblabel3,vblabel4,vblabel5);
         layout_content.getChildren().add(settings);
         myReader.close();
         return separator;
