@@ -77,7 +77,7 @@ public class OpenProject {
             String line = reader.readLine();
             String[] commands = line.split(";");
             ChartWindow chartWindow = new ChartWindow();
-            chartWindow.showChartWindow(commands[0], commands[1], null);
+            chartWindow.showChartWindow(commands[0], commands[1]);
             while((line = reader.readLine())!=null){
                 commands = line.split(";");
                 ControllerOfChartWindow.addYseriesStaticly(chartWindow.controller.ySeriesSettings,chartWindow.controller.barChart,chartWindow.controller.lineChart,commands[0],commands[1],chartWindow.toSave);

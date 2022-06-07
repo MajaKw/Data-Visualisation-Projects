@@ -7,10 +7,13 @@ import javafx.scene.layout.Pane;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.util.logging.SimpleFormatter;
 
 
 public class UsefulFunctions {
@@ -54,5 +57,22 @@ public class UsefulFunctions {
             if(e.getClass() != ArrayIndexOutOfBoundsException.class) e.printStackTrace();
         }
         return columnName;
+    }
+
+    public static ArrayList<String> getAllFilePaths() {
+        ArrayList<String> filePaths = new ArrayList<>();
+        try {
+            Files.find(Path.of(MainMenu.pathToWorkingDirectory + "/Uploaded/"),
+                    Integer.MAX_VALUE,
+                    (filePath, fileAtrr) -> fileAtrr.isRegularFile()
+            ).forEach((s) -> {
+                StringBuilder sb = new StringBuilder(s.toString());
+                filePaths.add(sb.substring(sb.indexOf("Uploaded/")+"Uploaded/".length(), sb.length()));
+            });
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return filePaths;
     }
 }

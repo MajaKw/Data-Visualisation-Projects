@@ -41,10 +41,9 @@ public class ControllerOfChartSetUpWindow {
 
         List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
 
-        return listOfStrings.stream().filter(input -> {
-            return searchWordsArray.stream().allMatch(word ->
-                    input.toLowerCase().contains(word.toLowerCase()));
-        }).collect(Collectors.toList());
+        return listOfStrings.stream().filter(input -> searchWordsArray.stream().allMatch(
+                word -> input.toLowerCase().contains(word.toLowerCase()))).collect(Collectors.toList()
+        );
     }
 
 
@@ -94,8 +93,7 @@ public class ControllerOfChartSetUpWindow {
 
         // using data location
         // searching for available xColumns and yColumns
-        var filePaths = new ArrayList<String>();
-        filePaths.add("Test1.csv");
+        var filePaths = new ArrayList<String>(UsefulFunctions.getAllFilePaths());
         fillXYColumns(xColumns, yColumns, filePaths);
 
         xColumnsListView.getItems().addAll(xColumns);
@@ -128,7 +126,7 @@ public class ControllerOfChartSetUpWindow {
     public void createChart(ActionEvent e) {
         //create new window containing chart with specified data
         ChartWindow chartWindow = new ChartWindow();
-        chartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), null);
+        chartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText());
     }
 
     public void backToMainMenu(ActionEvent e) {
