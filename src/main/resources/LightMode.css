@@ -24,12 +24,15 @@
 
 .label{
 -fx-text-fill: #1e2749;
+    -fx-padding: 5;
 }
 
 .text-field{
 -fx-background-color:#e4d9ff;
 -fx-text-fill: #273469;
 }
+
+
 
 .radio-button{
 -fx-text-fill: #1e2749;
@@ -44,7 +47,9 @@
 .axis{
 -fx-tick-label-fill: #273469;
 }
-
+.label{
+    -fx-padding: 5;
+}
 .chart-legend {
 -fx-background-color:#e4d9ff;
 }
