@@ -18,26 +18,34 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 public class ControllerOfChartSetUpWindow {
-    // TODO: correct window resizing (so that buttons and fields stay centered)
-    @FXML
-    private ToggleButton button3D;
-    @FXML
-    private ToggleButton button2D;
     @FXML
     private TextField xAxisInputField;
     @FXML
     private TextField yAxisInputField;
+
+    ArrayList<String> xColumns;
+    ArrayList<String> yColumns;
+
     @FXML
-    private TextField zAxisInputField;
+    private ListView<String> xColumnsListView;
     @FXML
-    private Label zAxisInputLabel;
-    @FXML
-    private Button backToMainMenuButton;
+    private ListView<String> yColumnsListView;
+
+    public static List<String> searchList(String searchWords, List<String> listOfStrings) {
+
+        List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
+
+        return listOfStrings.stream().filter(input -> {
+            return searchWordsArray.stream().allMatch(word ->
+                    input.toLowerCase().contains(word.toLowerCase()));
+        }).collect(Collectors.toList());
+    }
 
     public String filePath;
     ArrayList<String> words;
@@ -166,23 +174,34 @@ public class ControllerOfChartSetUpWindow {
         listView3.getItems().clear();
         listView3.getItems().addAll(searchList(zAxisInputField.getText(),words));
     }
-    public void click2D(ActionEvent e) {
-        button2D.setSelected(true);
-        button3D.setSelected(false);
-        zAxisInputField.setVisible(false);
-        zAxisInputLabel.setVisible(false);
+
+    public static void fillXYColumns(Collection<String> xColumns, Collection<String> yColumns, ArrayList<String> filePaths) {
+        for(var path : filePaths) {
+            xColumns.add(path + '|' + UsefulFunctions.getColumnName(path, 0));
+            int i = 1;
+            String s = UsefulFunctions.getColumnName(path, i);
+            while(s != null) {
+                yColumns.add(path + '|' + s);
+                i++;
+                s = UsefulFunctions.getColumnName(path, i);
+            }
+        }
     }
-    public void click3D(ActionEvent e) {
-        button2D.setSelected(false);
-        button3D.setSelected(true);
-        zAxisInputField.setVisible(true);
-        zAxisInputLabel.setVisible(true);
+    @FXML
+    void search(KeyEvent evt) {
+        xColumnsListView.getItems().clear();
+        xColumnsListView.getItems().addAll(searchList(xAxisInputField.getText(),xColumns));
+    }
+    @FXML
+    void search2(KeyEvent evt) {
+        yColumnsListView.getItems().clear();
+        yColumnsListView.getItems().addAll(searchList(yAxisInputField.getText(),yColumns));
     }
 
     public void createChart(ActionEvent e) {
         //create new window containing chart with specified data
-        if(zAxisInputField.isVisible()) ChartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), zAxisInputField.getText());
-        else ChartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), null);
+        ChartWindow chartWindow = new ChartWindow();
+        chartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText(), null);
     }
 
     public void backToMainMenu(ActionEvent e) {

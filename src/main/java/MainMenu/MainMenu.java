@@ -1,6 +1,7 @@
 package MainMenu;
 
 import Menu.ChartSetUpWindow;
+import Menu.DataViewer;
 import Menu.DiagramWindow;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -10,7 +11,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.concurrent.ExecutionException;
+import  java.util.prefs.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -20,13 +25,28 @@ public class MainMenu extends Application {
     public Button toAboutProjectButton;
     public Button toOpenProjectButton;
 
+    public static String pathToWorkingDirectory;
+    final static String PREF_NAME = "working Directory";
+
     public static void main(String[] args){
+        Preferences prefs = Preferences.userNodeForPackage(MainMenu.class);
+        String defaultValue = "default string";
+        pathToWorkingDirectory = prefs.get(PREF_NAME, null); // "a string"
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setMinHeight(425);
+        stage.setMinWidth(600);
         show(stage);
+        if(pathToWorkingDirectory == null){
+            Stage newStage = new Stage();
+            newStage.initModality(Modality.APPLICATION_MODAL);
+            ChooseWorkingDirectory chooseWorkingDirectory = new ChooseWorkingDirectory();
+            chooseWorkingDirectory.show(newStage);
+            newStage.showAndWait();
+        }
     }
 
     public void show(Stage stage){
@@ -65,6 +85,13 @@ public class MainMenu extends Application {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+    }
+    public void handleViewerDataButtonPressed(ActionEvent event){
+        try {
+            new DataViewer().display("Upload window");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void handleSettingsButtonPressed(ActionEvent event){

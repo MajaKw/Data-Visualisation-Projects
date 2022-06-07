@@ -1,5 +1,8 @@
 package Menu;
 
+import DataManagement.Main;
+import MainMenu.MainMenu;
+import MainMenu.Settings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,7 +38,7 @@ public class DataViewer {
         window.setHeight(600);
         ListView<String> list = new ListView<String>();
         ObservableList<String> items = FXCollections.observableArrayList();
-        String filePath = "src/main/resources/Uploaded_files.json" ;
+        String filePath = MainMenu.pathToWorkingDirectory +"/Uploaded_files.json" ;
         JSONObject obj = (JSONObject) new JSONParser().parse(new FileReader(filePath));
         list.setOnMouseClicked(event -> {
             ListView<HBox> list_child = new ListView<HBox>();
@@ -46,10 +49,10 @@ public class DataViewer {
                 Text H1 = new Text(tx);
                 H1.setId("H1");
                 header.setAlignment(Pos.CENTER);
-                 header.getChildren().add(H1);
-                 layout.getChildren().add(header);
+                header.getChildren().add(H1);
+                layout.getChildren().add(header);
                 location=tx;
-                File file = new File("src/main/resources/Uploaded/"+tx);
+                File file = new File( MainMenu.pathToWorkingDirectory + "/Uploaded/"+tx);
                 String[] directories = file.list();
                 ObservableList<HBox> itemsnew = FXCollections.observableArrayList();
                 for (int i = 0; i < directories.length; i++) {
@@ -64,10 +67,10 @@ public class DataViewer {
                     itemsnew.get(i).setMargin(del, new Insets(0, 0, 0, 215));
                     del.setOnAction(e->{
                         itemsnew.remove(cont);
-                        File myObj = new File("src/main/resources/Uploaded/"+location+"/"+t.getText()+".csv");
+                        File myObj = new File(MainMenu.pathToWorkingDirectory + "/Uploaded/"+location+"/"+t.getText()+".csv");
                         myObj.delete();
                         try {
-                            JSONObject json = (JSONObject) new JSONParser().parse(new FileReader("src/main/resources/categories.json"));
+                            JSONObject json = (JSONObject) new JSONParser().parse(new FileReader(MainMenu.pathToWorkingDirectory +  "/categories.json"));
                             for (Object o : json.keySet()) {
                                 JSONArray jsonArray = (JSONArray) json.get(o);
                                 for (int j = 0; j < jsonArray.size(); j++) {
@@ -80,7 +83,7 @@ public class DataViewer {
                                 }
                             }
 
-                            try (PrintWriter out = new PrintWriter(new FileWriter("src/main/resources/categories.json"))) {
+                            try (PrintWriter out = new PrintWriter(new FileWriter(MainMenu.pathToWorkingDirectory + "/categories.json"))) {
                                 out.write(json.toString());
                             } catch (Exception eve) {
                                 eve.printStackTrace();
@@ -92,10 +95,10 @@ public class DataViewer {
                         }
 
                         try {
-                            JSONObject json = (JSONObject) new JSONParser().parse(new FileReader("src/main/resources/Uploaded_files.json"));
+                            JSONObject json = (JSONObject) new JSONParser().parse(new FileReader(MainMenu.pathToWorkingDirectory + "/Uploaded_files.json"));
                             json.remove(t.getText());
 
-                            try (PrintWriter out = new PrintWriter(new FileWriter("src/main/resources/Uploaded_files.json"))) {
+                            try (PrintWriter out = new PrintWriter(new FileWriter(MainMenu.pathToWorkingDirectory+ "/Uploaded_files.json"))) {
                                 out.write(json.toString());
                             } catch (Exception eve) {
                                 eve.printStackTrace();
@@ -121,7 +124,7 @@ public class DataViewer {
 //                 layout.getChildren().add(File_list);
             }
         });
-        File file = new File("src/main/resources/Uploaded");
+        File file = new File(MainMenu.pathToWorkingDirectory +  "/Uploaded");
         String[] directories = file.list(new FilenameFilter() {
             @Override
             public boolean accept(File current, String name) {
@@ -138,6 +141,12 @@ public class DataViewer {
         layout.getChildren().add(list);
         Scene scene = new Scene(layout);
         scene.getStylesheets().add((new File("src/main/java/res/style_viewer.css")).toURI().toString());
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
         window.setScene(scene);
         window.showAndWait();
     }

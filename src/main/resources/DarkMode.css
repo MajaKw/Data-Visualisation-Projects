@@ -21,6 +21,13 @@
 #titleLabel{
 -fx-text-fill: #415a77;
 }
+#data{
+    -fx-padding: 5;
+}
+
+.menu-item{
+    -fx-background-color: #1b263b;
+}
 
 .menu-item{
     -fx-background-color: #1b263b;
@@ -41,9 +48,24 @@
     -fx-alignment: center;
     -fx-text-fill: white;
 }
+.list-view .list-cell {
+    -fx-background-color: #1b263b;
+    -fx-alignment: center;
+    -fx-text-fill: white;
+}
 .table-view .cell:odd{
     -fx-background-color: #354b74;
     -fx-alignment: center;
+}
+.list-view .list-cell:odd{
+    -fx-background-color: #354b74;
+    -fx-alignment: center;
+}
+.list-view{
+    -fx-text-fill: white;
+}
+#H1{
+    -fx-text-fill: white;
 }
 .table-view{
     -fx-background-color: #1b263b;
@@ -84,4 +106,9 @@
 
 .chart-plot-background{
 -fx-background-color: #778da9;
+}
+
+.color-picker{
+-fx-background-color:#1b263b;
+-fx-text-fill: #415a77;
 }

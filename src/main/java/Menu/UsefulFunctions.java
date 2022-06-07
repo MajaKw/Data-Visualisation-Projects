@@ -1,5 +1,6 @@
 package Menu;
 
+import MainMenu.MainMenu;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -24,7 +25,8 @@ public class UsefulFunctions {
     }
 
     public static int getColumnIndex(String path, String columnName) {
-        String file ="src/main/resources/Uploaded/"+path;
+        //using data location
+        String file = MainMenu.pathToWorkingDirectory + "/Uploaded/"+path;
         int index = -1;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -37,5 +39,20 @@ public class UsefulFunctions {
             e.printStackTrace();
         }
         return index-1;
+    }
+
+    public static String getColumnName(String path, int idx) {
+        // using data location
+        String file = MainMenu.pathToWorkingDirectory + "/Uploaded/"+path;
+        String columnName = null;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            String[] names = line.split(";");
+            columnName = names[idx];
+        } catch(Exception e) {
+            if(e.getClass() != ArrayIndexOutOfBoundsException.class) e.printStackTrace();
+        }
+        return columnName;
     }
 }
