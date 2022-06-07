@@ -47,59 +47,132 @@ public class ControllerOfChartSetUpWindow {
         }).collect(Collectors.toList());
     }
 
+    public String filePath;
+    ArrayList<String> words;
+    Object obj;
+    JSONObject jo;
 
     @FXML
-    public void initialize() {
-        xColumns = new ArrayList<>(); yColumns = new ArrayList<>();
-        xColumnsListView.setVisible(false);
-        xColumnsListView.setManaged(false);
-        yColumnsListView.setVisible(false);
-        yColumnsListView.setManaged(false);
+    private ListView<String> listView;
+    @FXML
+    private ListView<String> listView2;
+    @FXML
+    private ListView<String> listView3;
+    private List<String> searchList(String searchWords, List<String> listOfStrings) {
+
+        List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
+
+        return listOfStrings.stream().filter(input -> {
+            return searchWordsArray.stream().allMatch(word ->
+                    input.toLowerCase().contains(word.toLowerCase()));
+        }).collect(Collectors.toList());
+    }
+
+
+    @FXML
+    public void initialize() throws IOException, ParseException {
+        button2D.setSelected(true);
+        zAxisInputLabel.setVisible(false);
+        System.out.println("---------------creation----------------");
+        filePath = "src/main/resources/categories.json";
+
+        words = new ArrayList<>();
+        this.obj = new JSONParser().parse(new FileReader(filePath));
+        this.jo = (JSONObject) obj;
+        listView.setVisible(false);
+        listView.setManaged(false);
+        listView2.setVisible(false);
+        listView2.setManaged(false);
+        listView3.setVisible(false);
+        listView3.setManaged(false);
         xAxisInputField.focusedProperty().addListener((obs, oldVal, newVal) ->
         {
-            xColumnsListView.setVisible(newVal);
-            xColumnsListView.setManaged(newVal);
+            listView.setVisible(newVal);
+            listView.setManaged(newVal);
         });
         yAxisInputField.focusedProperty().addListener((obs, oldVal, newVal) ->
         {
-            yColumnsListView.setVisible(newVal);
-            yColumnsListView.setManaged(newVal);
+            listView2.setVisible(newVal);
+            listView2.setManaged(newVal);
         });
-        xColumnsListView.focusedProperty().addListener((obs, oldVal, newVal) ->
+        zAxisInputField.focusedProperty().addListener((obs, oldVal, newVal) ->
         {
-            xColumnsListView.setVisible(newVal);
-            xColumnsListView.setManaged(newVal);
+            listView3.setVisible(newVal);
+            listView3.setManaged(newVal);
         });
-        yColumnsListView.focusedProperty().addListener((obs, oldVal, newVal) ->
+        listView.focusedProperty().addListener((obs, oldVal, newVal) ->
         {
-            yColumnsListView.setVisible(newVal);
-            yColumnsListView.setManaged(newVal);
+            listView.setVisible(newVal);
+            listView.setManaged(newVal);
         });
-        xColumnsListView.setOnMouseClicked(event -> {
-            String File = xColumnsListView.getSelectionModel().getSelectedItem();
-            xAxisInputField.setText(File);
-            xColumnsListView.getSelectionModel().clearSelection();
-            xColumnsListView.getFocusModel().focus(-1);
-            xColumnsListView.setVisible(false);
-            xColumnsListView.setManaged(false);
+        listView2.focusedProperty().addListener((obs, oldVal, newVal) ->
+        {
+            listView2.setVisible(newVal);
+            listView2.setManaged(newVal);
         });
-        yColumnsListView.setOnMouseClicked(event -> {
-            String File = yColumnsListView.getSelectionModel().getSelectedItem();
-            yAxisInputField.setText(File);
-            yColumnsListView.getSelectionModel().clearSelection();
-            yColumnsListView.getFocusModel().focus(-1);
-            yColumnsListView.setVisible(false);
-            yColumnsListView.setManaged(false);
+        listView3.focusedProperty().addListener((obs, oldVal, newVal) ->
+        {
+            listView3.setVisible(newVal);
+            listView3.setManaged(newVal);
         });
+        listView.setOnMouseClicked(event -> {
+            if (event.getClickCount()==2){
+                String File = listView.getSelectionModel().getSelectedItem();
+                xAxisInputField.setText(File);
+                listView.getSelectionModel().clearSelection();
+                listView.getFocusModel().focus(-1);
+                listView.setVisible(false);
+                listView.setManaged(false);
+            }
+        });
+        listView2.setOnMouseClicked(event -> {
+            if (event.getClickCount()==2){
+                String File = listView2.getSelectionModel().getSelectedItem();
+                yAxisInputField.setText(File);
+                listView2.getSelectionModel().clearSelection();
+                listView2.getFocusModel().focus(-1);
+                listView2.setVisible(false);
+                listView2.setManaged(false);
+            }
+        });
+        listView3.setOnMouseClicked(event -> {
+            if (event.getClickCount()==2){
+                String File = listView3.getSelectionModel().getSelectedItem();
+                zAxisInputField.setText(File);
+                listView3.getSelectionModel().clearSelection();
+                listView3.getFocusModel().focus(-1);
+                listView3.setVisible(false);
+                listView3.setManaged(false);
+            }
+        });
+        words.clear();
 
-        // using data location
-        // searching for available xColumns and yColumns
-        var filePaths = new ArrayList<String>();
-        filePaths.add("Test1.csv");
-        fillXYColumns(xColumns, yColumns, filePaths);
+        for (Object o : jo.keySet()) {
+            JSONArray cattegory = (JSONArray) jo.get(o);
+            for (int i = 0; i<cattegory.size(); i++){
+                String obj = (String) cattegory.get(i);
+                words.add(obj);
+            }
+        }
 
-        xColumnsListView.getItems().addAll(xColumns);
-        yColumnsListView.getItems().addAll(yColumns);
+        listView.getItems().addAll(words);
+        listView2.getItems().addAll(words);
+        listView3.getItems().addAll(words);
+    }
+    @FXML
+    void search(KeyEvent evt) {
+        listView.getItems().clear();
+        listView.getItems().addAll(searchList(xAxisInputField.getText(),words));
+    }
+    @FXML
+    void search2(KeyEvent evt) {
+        listView2.getItems().clear();
+        listView2.getItems().addAll(searchList(yAxisInputField.getText(),words));
+    }
+    @FXML
+    void search3(KeyEvent evt) {
+        listView3.getItems().clear();
+        listView3.getItems().addAll(searchList(zAxisInputField.getText(),words));
     }
 
     public static void fillXYColumns(Collection<String> xColumns, Collection<String> yColumns, ArrayList<String> filePaths) {
