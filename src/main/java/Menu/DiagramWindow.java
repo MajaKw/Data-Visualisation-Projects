@@ -84,48 +84,48 @@ public class DiagramWindow {
         fileChooser.setTitle("Open Data File");
         List<String> extensions = Arrays.asList("csv", "txt");
 
-                File uploaded_file = fileChooser.showOpenDialog(window);
-                //ERROR CHECKS
-                if(uploaded_file == null){
-                    error.setText("No file chosen");
-                    return;
-                }
-                System.out.println(uploaded_file);
-                String extension = Files.getFileExtension(uploaded_file.getAbsolutePath());
-                long file_size = uploaded_file.length();
-                if (!extensions.contains(extension)) {
-                    error.setText("File extension not in allowed: " + extensions.toString());
-                    return;
-                }
-                if(file_size>500000){
-                    error.setText("File is too big");
-                    return;
-                }
-                //END
+        File uploaded_file = fileChooser.showOpenDialog(window);
+        //ERROR CHECKS
+        if(uploaded_file == null){
+            error.setText("No file chosen");
+            return;
+        }
+        System.out.println(uploaded_file);
+        String extension = Files.getFileExtension(uploaded_file.getAbsolutePath());
+        long file_size = uploaded_file.length();
+        if (!extensions.contains(extension)) {
+            error.setText("File extension not in allowed: " + extensions.toString());
+            return;
+        }
+        if(file_size>500000){
+            error.setText("File is too big");
+            return;
+        }
+        //END
+        try {
+            String separator = table_creation("",uploaded_file);
+
+            Label label1 = new Label("Separator:");
+            TextField textField = new TextField();
+            textField.setText(separator);
+
+            Button button = new Button("Change");
+            HBox hb = new HBox();
+            hb.getChildren().addAll(label1, textField,button);
+            hb.setSpacing(10);
+            layout_content.getChildren().add(hb);
+
+            button.setOnAction(actionEvents ->  {
                 try {
-                    String separator = table_creation("",uploaded_file);
-
-                    Label label1 = new Label("Separator:");
-                    TextField textField = new TextField();
-                    textField.setText(separator);
-
-                    Button button = new Button("Change");
-                    HBox hb = new HBox();
-                    hb.getChildren().addAll(label1, textField,button);
-                    hb.setSpacing(10);
+                    hm.clear();
+                    layout_content.getChildren().clear();
+                    table_creation(textField.getText(),uploaded_file);
                     layout_content.getChildren().add(hb);
-
-                    button.setOnAction(actionEvents ->  {
-                        try {
-                            hm.clear();
-                            layout_content.getChildren().clear();
-                            table_creation(textField.getText(),uploaded_file);
-                            layout_content.getChildren().add(hb);
-                        }catch (FileNotFoundException e) {
-                            error.setText("File was not found");
-                            return;
-                        }
-                    });
+                }catch (FileNotFoundException e) {
+                    error.setText("File was not found");
+                    return;
+                }
+            });
 
 
 
