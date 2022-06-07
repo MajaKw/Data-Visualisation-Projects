@@ -17,7 +17,7 @@ public class ChartWindow {
 
     public ControllerOfChartWindow controller;
 
-    public void showChartWindow(String xAxis, String yAxis, String zAxis){
+    public void showChartWindow(String xAxis, String yAxis){
         root = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ChartSetUpWindow.class.getResource("ChartWindow.fxml"));

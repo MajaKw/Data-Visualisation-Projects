@@ -1,5 +1,6 @@
 package DataManagement;
 
+import MainMenu.MainMenu;
 import javafx.collections.FXCollections;
 import javafx.scene.chart.XYChart;
 
@@ -12,7 +13,7 @@ public class SeriesCollector {
 
     public SeriesCollector(String path){
         try {
-            String file ="src/main/resources/Uploaded/"+path;
+            String file = MainMenu.pathToWorkingDirectory+"/Uploaded/" + path;
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = reader.readLine();
             String[] names = line.split(";");

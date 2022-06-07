@@ -59,8 +59,7 @@ public class ControllerOfChartWindow {
 
         // using data location
         // searching for available xColumns and yColumns
-        var filePaths = new ArrayList<String>();
-        filePaths.add("Test1.csv");
+        var filePaths = new ArrayList<String>(UsefulFunctions.getAllFilePaths());
         ControllerOfChartSetUpWindow.fillXYColumns(new ArrayList<>(), availableYseries, filePaths);
         addYseriesComboBox.getItems().addAll(availableYseries);
     }
@@ -85,8 +84,7 @@ public class ControllerOfChartWindow {
         String inputSeriesName = addYseriesComboBox.getEditor().getText();
         if(!availableYseries.contains(inputSeriesName)) return;
         // using data location
-        ArrayList<String> filePaths = new ArrayList<>();
-        filePaths.add("Test1.csv");
+        ArrayList<String> filePaths = new ArrayList<>(UsefulFunctions.getAllFilePaths());
         for(var path : filePaths) {
             addYseriesStaticly(ySeriesSettings, barChart, lineChart, path, addYseriesComboBox.getEditor().getText().split("\\|")[1], chartWindow.toSave);
         }
