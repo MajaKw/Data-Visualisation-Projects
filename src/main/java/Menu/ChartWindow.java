@@ -51,6 +51,7 @@ public class ChartWindow {
         }
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.setTitle("Chart window");
         stage.show();
     }
 }

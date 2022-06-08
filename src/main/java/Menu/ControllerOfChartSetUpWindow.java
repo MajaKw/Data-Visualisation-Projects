@@ -3,19 +3,11 @@ package Menu;
 import MainMenu.MainMenu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,20 +16,17 @@ import java.util.stream.Collectors;
 
 
 public class ControllerOfChartSetUpWindow {
-    @FXML
-    private TextField xAxisInputField;
-    @FXML
-    private TextField yAxisInputField;
+
 
     ArrayList<String> xColumns;
     ArrayList<String> yColumns;
 
     @FXML
-    private ListView<String> xColumnsListView;
+    ComboBox<String> xAxisInputField;
     @FXML
-    private ListView<String> yColumnsListView;
+    ComboBox<String> yAxisInputField;
 
-    public static List<String> searchList(String searchWords, List<String> listOfStrings) {
+    public static List<String> getColumnNamesMatching(String searchWords, List<String> listOfStrings) {
 
         List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
 
@@ -50,54 +39,14 @@ public class ControllerOfChartSetUpWindow {
     @FXML
     public void initialize() {
         xColumns = new ArrayList<>(); yColumns = new ArrayList<>();
-        xColumnsListView.setVisible(false);
-        xColumnsListView.setManaged(false);
-        yColumnsListView.setVisible(false);
-        yColumnsListView.setManaged(false);
-        xAxisInputField.focusedProperty().addListener((obs, oldVal, newVal) ->
-        {
-            xColumnsListView.setVisible(newVal);
-            xColumnsListView.setManaged(newVal);
-        });
-        yAxisInputField.focusedProperty().addListener((obs, oldVal, newVal) ->
-        {
-            yColumnsListView.setVisible(newVal);
-            yColumnsListView.setManaged(newVal);
-        });
-        xColumnsListView.focusedProperty().addListener((obs, oldVal, newVal) ->
-        {
-            xColumnsListView.setVisible(newVal);
-            xColumnsListView.setManaged(newVal);
-        });
-        yColumnsListView.focusedProperty().addListener((obs, oldVal, newVal) ->
-        {
-            yColumnsListView.setVisible(newVal);
-            yColumnsListView.setManaged(newVal);
-        });
-        xColumnsListView.setOnMouseClicked(event -> {
-            String File = xColumnsListView.getSelectionModel().getSelectedItem();
-            xAxisInputField.setText(File);
-            xColumnsListView.getSelectionModel().clearSelection();
-            xColumnsListView.getFocusModel().focus(-1);
-            xColumnsListView.setVisible(false);
-            xColumnsListView.setManaged(false);
-        });
-        yColumnsListView.setOnMouseClicked(event -> {
-            String File = yColumnsListView.getSelectionModel().getSelectedItem();
-            yAxisInputField.setText(File);
-            yColumnsListView.getSelectionModel().clearSelection();
-            yColumnsListView.getFocusModel().focus(-1);
-            yColumnsListView.setVisible(false);
-            yColumnsListView.setManaged(false);
-        });
 
         // using data location
         // searching for available xColumns and yColumns
         var filePaths = new ArrayList<String>(UsefulFunctions.getAllFilePaths());
         fillXYColumns(xColumns, yColumns, filePaths);
 
-        xColumnsListView.getItems().addAll(xColumns);
-        yColumnsListView.getItems().addAll(yColumns);
+        xAxisInputField.getItems().addAll(xColumns);
+        yAxisInputField.getItems().addAll(yColumns);
     }
 
     public static void fillXYColumns(Collection<String> xColumns, Collection<String> yColumns, ArrayList<String> filePaths) {
@@ -112,21 +61,21 @@ public class ControllerOfChartSetUpWindow {
             }
         }
     }
-    @FXML
-    void search(KeyEvent evt) {
-        xColumnsListView.getItems().clear();
-        xColumnsListView.getItems().addAll(searchList(xAxisInputField.getText(),xColumns));
+
+    public void xAxisTypingIn(KeyEvent k) {
+        xAxisInputField.getItems().clear();
+        xAxisInputField.getItems().addAll(getColumnNamesMatching(xAxisInputField.getEditor().getText(), xColumns));
     }
-    @FXML
-    void search2(KeyEvent evt) {
-        yColumnsListView.getItems().clear();
-        yColumnsListView.getItems().addAll(searchList(yAxisInputField.getText(),yColumns));
+
+    public void yAxisTypingIn(KeyEvent k) {
+        yAxisInputField.getItems().clear();
+        yAxisInputField.getItems().addAll(getColumnNamesMatching(yAxisInputField.getEditor().getText(), yColumns));
     }
 
     public void createChart(ActionEvent e) {
         //create new window containing chart with specified data
         ChartWindow chartWindow = new ChartWindow();
-        chartWindow.showChartWindow(xAxisInputField.getText(), yAxisInputField.getText());
+        chartWindow.showChartWindow(xAxisInputField.getEditor().getText(), yAxisInputField.getEditor().getText());
     }
 
     public void backToMainMenu(ActionEvent e) {

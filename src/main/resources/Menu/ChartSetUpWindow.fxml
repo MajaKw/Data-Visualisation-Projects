@@ -2,14 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="522.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartSetUpWindow">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="522.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartSetUpWindow">
    <top>
       <HBox prefHeight="47.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -31,32 +30,18 @@
                <children>
                   <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
                      <children>
-                        <Label contentDisplay="RIGHT" prefHeight="26.0" prefWidth="250.0" text="X-axis">
-                           <graphic>
-                              <TextField onKeyPressed="#search" prefHeight="26.0" prefWidth="170.0" fx:id="xAxisInputField" />
-                           </graphic>
-                        </Label>
+                        <Label contentDisplay="RIGHT" text="X-axis" />
+                        <ComboBox editable="true" onKeyReleased="#xAxisTypingIn" prefWidth="150.0" fx:id="xAxisInputField" />
                      </children>
                   </HBox>
+                  <HBox alignment="CENTER" />
                   <HBox alignment="CENTER">
                      <children>
-                        <ListView prefHeight="70.0" prefWidth="160.0" fx:id="xColumnsListView" />
+                        <Label contentDisplay="RIGHT" text="Y-axis" />
+                        <ComboBox fx:id="yAxisInputField" editable="true" onKeyReleased="#yAxisTypingIn" prefWidth="150.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <Label contentDisplay="RIGHT" prefHeight="26.0" prefWidth="250.0" text="Y-axis">
-                           <graphic>
-                              <TextField fx:id="yAxisInputField" onKeyPressed="#search2" prefWidth="170.0" />
-                           </graphic>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <ListView fx:id="yColumnsListView" prefHeight="70.0" prefWidth="160.0" />
-                     </children>
-                  </HBox>
+                  <HBox alignment="CENTER" />
                </children>
             </VBox>
             <HBox alignment="CENTER" minHeight="75.0" prefHeight="200.0" prefWidth="522.0">
