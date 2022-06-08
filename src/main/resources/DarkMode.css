@@ -85,7 +85,12 @@
 
 .combo-box{
 -fx-background-color:#1b263b;
--fx-text-fill: #415a77;
+-fx-text-fill: #e0e1dd;
+}
+
+.combo-box .list-cell{
+-fx-background-color:#1b263b;
+-fx-text-fill: #e0e1dd;
 }
 
 .axis{

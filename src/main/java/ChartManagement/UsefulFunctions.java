@@ -88,7 +88,7 @@ public class UsefulFunctions {
                 StringBuilder sb = new StringBuilder(s.toString());
                 if(sb.substring(sb.length()-4, sb.length()).equals(".csv")) {
 //                    System.out.println(sb);
-                    String st = sb.substring(sb.indexOf("Uploaded/")+"Uploaded/".length(), sb.length());
+                    String st = sb.substring(sb.indexOf("Uploaded\\")+"Uploaded\\".length(), sb.length());
                     filePaths.add(st);
                 }
             });
