@@ -34,9 +34,9 @@ public class UsefulFunctions {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = reader.readLine();
-            String[] names = line.split(";");
-            for(int i=0; i<names.length; i++) {
-                if(names[i].equals(columnName)) index = i;
+            String[] namesAndUnits = line.split(";");
+            for(int i=0; i<namesAndUnits.length; i++) {
+                if(namesAndUnits[i].split("\\|")[0].equals(columnName)) { index = i; break; }
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -51,12 +51,26 @@ public class UsefulFunctions {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = reader.readLine();
-            String[] names = line.split(";");
-            columnName = names[idx];
+            String[] namesAndUnits = line.split(";");
+            columnName = namesAndUnits[idx].split("\\|")[0];
         } catch(Exception e) {
             if(e.getClass() != ArrayIndexOutOfBoundsException.class) e.printStackTrace();
         }
         return columnName;
+    }
+
+    public static String getColumnUnit(String path, int idx) {
+        String file = MainMenu.pathToWorkingDirectory + "/Uploaded/"+path;
+        String columnUnit = null;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            String[] namesAndUnits = line.split(";");
+            columnUnit = namesAndUnits[idx].split("\\|")[1];
+        } catch(Exception e) {
+            if(e.getClass() != ArrayIndexOutOfBoundsException.class) e.printStackTrace();
+        }
+        return columnUnit;
     }
 
     public static ArrayList<String> getAllFilePaths() {

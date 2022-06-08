@@ -44,7 +44,7 @@
                         <Insets bottom="2.0" />
                      </VBox.margin>
                      <children>
-                        <RadioButton fx:id="barChartButton" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Bar chart">
+                        <RadioButton fx:id="barChartButton" mnemonicParsing="false" onAction="#barLineSwitch" text="Bar chart">
                            <toggleGroup>
                               <ToggleGroup fx:id="BarOrLine" />
                            </toggleGroup>
@@ -56,7 +56,7 @@
                         <Insets bottom="20.0" />
                      </VBox.margin>
                      <children>
-                        <RadioButton fx:id="lineCharButton" mnemonicParsing="false" onAction="#bar_LineSwitch" text="Line chart" toggleGroup="$BarOrLine" />
+                        <RadioButton fx:id="lineCharButton" mnemonicParsing="false" onAction="#barLineSwitch" text="Line chart" toggleGroup="$BarOrLine" />
                      </children>
                   </HBox>
                </children>
