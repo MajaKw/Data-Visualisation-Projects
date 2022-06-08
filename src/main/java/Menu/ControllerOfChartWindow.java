@@ -65,7 +65,7 @@ public class ControllerOfChartWindow {
         addYseriesComboBox.getItems().addAll(ControllerOfChartSetUpWindow.getColumnNamesMatching(addYseriesComboBox.getEditor().getText(),availableYseries));
     }
 
-    public void bar_LineSwitch(ActionEvent e) {
+    public void barLineSwitch(ActionEvent e) {
         if(barChartButton.isSelected()) {
             barChart.setVisible(true);
             lineChart.setVisible(false);
