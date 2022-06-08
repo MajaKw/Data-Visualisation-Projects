@@ -23,6 +23,7 @@ public class ChartSetUpWindow {
                 scene.getStylesheets().add("LightMode.css");
             }
             stage.setScene(scene);
+            stage.setTitle("Chart setup");
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();

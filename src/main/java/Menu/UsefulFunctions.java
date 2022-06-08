@@ -29,8 +29,6 @@ public class UsefulFunctions {
 
     public static int getColumnIndex(String path, String columnName) {
         //using data location
-        System.out.println(path);
-        System.out.println(columnName);
         String file = MainMenu.pathToWorkingDirectory + "/Uploaded/"+path;
         int index = -1;
         try {
@@ -69,7 +67,11 @@ public class UsefulFunctions {
                     (filePath, fileAtrr) -> fileAtrr.isRegularFile()
             ).forEach((s) -> {
                 StringBuilder sb = new StringBuilder(s.toString());
-                filePaths.add(sb.substring(sb.indexOf("Uploaded\\")+"Uploaded\\".length(), sb.length()));
+                if(sb.substring(sb.length()-4, sb.length()).equals(".csv")) {
+//                    System.out.println(sb);
+                    String st = sb.substring(sb.indexOf("Uploaded/")+"Uploaded/".length(), sb.length());
+                    filePaths.add(st);
+                }
             });
         } catch(Exception e) {
             e.printStackTrace();

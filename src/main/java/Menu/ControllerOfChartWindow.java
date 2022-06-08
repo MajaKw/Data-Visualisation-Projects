@@ -1,9 +1,6 @@
 package Menu;
 
 import DataManagement.Main;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +9,6 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -66,7 +62,7 @@ public class ControllerOfChartWindow {
 
     public void ComboBoxTypingIn(KeyEvent k) {
         addYseriesComboBox.getItems().clear();
-        addYseriesComboBox.getItems().addAll(ControllerOfChartSetUpWindow.searchList(addYseriesComboBox.getEditor().getText(),availableYseries));
+        addYseriesComboBox.getItems().addAll(ControllerOfChartSetUpWindow.getColumnNamesMatching(addYseriesComboBox.getEditor().getText(),availableYseries));
     }
 
     public void bar_LineSwitch(ActionEvent e) {
