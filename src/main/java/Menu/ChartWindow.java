@@ -32,6 +32,7 @@ public class ChartWindow {
         barChart = UsefulFunctions.loopOverSceneGraph(root, BarChart.class).get(0);
 
         toSave = new StringBuilder();
+        toSave.append(xAxis).append(";").append(yAxis).append("\n");
 
         // populating charts with data and ySeriesSettings
         // using data location

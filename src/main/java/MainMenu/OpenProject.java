@@ -74,6 +74,7 @@ public class OpenProject {
         }
         try {
             BufferedReader reader = new BufferedReader(new FileReader(toRead));
+            String css = reader.readLine();
             String line = reader.readLine();
             String[] commands = line.split(";");
             ChartWindow chartWindow = new ChartWindow();
@@ -81,9 +82,9 @@ public class OpenProject {
             while((line = reader.readLine())!=null){
                 commands = line.split(";");
                 ControllerOfChartWindow.addYseriesStaticly(chartWindow.controller.ySeriesSettings,chartWindow.controller.barChart,chartWindow.controller.lineChart,commands[0],commands[1],chartWindow.toSave);
-                //ControllerOfChartWindow.addYseriesStatic(ySeriesSettings, barChart, lineChart, path, yAxis,toSave);
-
             }
+            chartWindow.barChart.setStyle(css);
+            chartWindow.lineChart.setStyle(css);
         } catch (Exception e) {
             error.setText("Something went wrong");
             return;

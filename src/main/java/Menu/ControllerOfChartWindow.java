@@ -150,8 +150,9 @@ public class ControllerOfChartWindow {
 
 
         ySeriesSettings.getChildren().add(oneSeriesSettings);
-
-        toSave.append(path).append(";").append(columnName).append("\n");
+        if(ySeriesSettings.getChildren().size()>1) {
+            toSave.append(path).append(";").append(columnName).append("\n");
+        }
     }
 
 

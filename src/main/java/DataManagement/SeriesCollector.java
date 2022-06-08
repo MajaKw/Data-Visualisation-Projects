@@ -22,7 +22,7 @@ public class SeriesCollector {
                 Series[i]=new XYChart.Series<>();
                 Series[i].setName(names[i+1]);
             }
-            while((line = reader.readLine()) != null && !line.equals("---EOD---")){
+            while((line = reader.readLine()) != null && !line.equals("---EOD---;")){
                 String[] values = line.split(";");
                 for (int i = 0; i < names.length-1 ; i++) {
                     Series[i].getData().add(new XYChart.Data<String,Number>(values[0],Double.valueOf(values[i+1])));

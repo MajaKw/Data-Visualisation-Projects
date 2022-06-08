@@ -51,6 +51,8 @@ public class SaveWindowController {
             newFile.createNewFile();
             FileWriter fileWriter = new FileWriter(newFile);
             //System.out.println(chartWindow.toSave);
+            //System.out.println(chartWindow.barChart.getStyle());
+            fileWriter.write(chartWindow.barChart.getStyle() + "\n");
             fileWriter.write(chartWindow.toSave.toString());
             fileWriter.close();
         } catch (IOException e) {
