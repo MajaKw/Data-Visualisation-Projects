@@ -1,4 +1,4 @@
-package Menu;
+package ChartManagement;
 
 import MainMenu.Settings;
 import javafx.fxml.FXMLLoader;

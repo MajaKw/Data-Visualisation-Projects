@@ -1,12 +1,10 @@
-package Menu;
+package ChartManagement;
 
 import DataManagement.Main;
 import MainMenu.MainMenu;
 import MainMenu.Settings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,7 +20,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.awt.event.MouseEvent;
 import java.io.*;
 
 public class DataViewer {

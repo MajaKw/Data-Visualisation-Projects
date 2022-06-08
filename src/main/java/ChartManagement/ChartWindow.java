@@ -1,4 +1,4 @@
-package Menu;
+package ChartManagement;
 
 import MainMenu.Settings;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +14,8 @@ public class ChartWindow {
     public BarChart barChart;
     public LineChart lineChart;
     public Parent root;
+    public VBox ySeriesSettings;
+    public String xAxisUnit, yAxisUnit;
 
     public ControllerOfChartWindow controller;
 
@@ -35,13 +37,30 @@ public class ChartWindow {
         toSave.append(xAxis).append(";").append(yAxis).append("\n");
 
         // populating charts with data and ySeriesSettings
-        // using data location
+
         // assuming that xAxis is in the format <pathToFile>|<columnName>
-        String path = xAxis.split("\\|")[0];
-        int yAxisIndex = UsefulFunctions.getColumnIndex(path, yAxis.split("\\|")[1]);
-        if(yAxisIndex < 0) return;
-        VBox ySeriesSettings = UsefulFunctions.loopOverSceneGraph(root, VBox.class).get(1);
-        ControllerOfChartWindow.addYseriesStaticly(ySeriesSettings, barChart, lineChart, path, yAxis.split("\\|")[1], toSave);
+        // checking if input makes sense
+        String xColumnPath = xAxis.split("\\|")[0];
+        String xColumnName = xAxis.split("\\|")[0];
+        if(!UsefulFunctions.getAllFilePaths().contains(xColumnPath))
+            UsefulFunctions.showErrorWindow("Invalid path for X-axis: " + xColumnPath);
+        String yColumnName = yAxis.split("\\|")[1];
+        String yColumnPath = yAxis.split("\\|")[0];
+        if(!xColumnPath.equals(yColumnPath))
+            UsefulFunctions.showErrorWindow("Invalid path for Y-axis: " + yColumnName);
+        int yAxisIndex = UsefulFunctions.getColumnIndex(yColumnPath, yColumnName);
+        if(yAxisIndex < 0) {
+            UsefulFunctions.showErrorWindow("Column \"" + yColumnName + "\" not found");
+            return;
+        }
+
+        xAxisUnit = UsefulFunctions.getColumnUnit(xColumnPath, 0);
+        yAxisUnit = UsefulFunctions.getColumnUnit(yColumnPath, UsefulFunctions.getColumnIndex(yColumnPath, yColumnName)+1);
+        System.out.println("xAxisUnit: " + xAxisUnit + ", yAxisUnit: " + yAxisUnit);
+
+        for(var tmpVBox : UsefulFunctions.loopOverSceneGraph(root, VBox.class))
+            if(tmpVBox.getChildren().size() == 0) ySeriesSettings = tmpVBox;
+        ControllerOfChartWindow.addYseriesStaticly(this, xColumnPath, yAxis.split("\\|")[1], toSave);
 
         Scene scene = new Scene(root);
         if(Settings.isDarkMode){

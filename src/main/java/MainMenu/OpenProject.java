@@ -1,7 +1,7 @@
 package MainMenu;
 
-import Menu.ChartWindow;
-import Menu.ControllerOfChartWindow;
+import ChartManagement.ChartWindow;
+import ChartManagement.ControllerOfChartWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -81,7 +81,7 @@ public class OpenProject {
             chartWindow.showChartWindow(commands[0], commands[1]);
             while((line = reader.readLine())!=null){
                 commands = line.split(";");
-                ControllerOfChartWindow.addYseriesStaticly(chartWindow.controller.ySeriesSettings,chartWindow.controller.barChart,chartWindow.controller.lineChart,commands[0],commands[1],chartWindow.toSave);
+                ControllerOfChartWindow.addYseriesStaticly(chartWindow,commands[0],commands[1],chartWindow.toSave);
             }
             chartWindow.barChart.setStyle(css);
             chartWindow.lineChart.setStyle(css);

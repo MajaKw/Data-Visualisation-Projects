@@ -1,4 +1,4 @@
-package Menu;
+package ChartManagement;
 
 import DataManagement.Main;
 import javafx.fxml.FXML;
@@ -42,16 +42,8 @@ public class ControllerOfChartWindow {
         barChart.setVisible(true);
         barChartButton.setSelected(true);
 
-//        addYseriesComboBox.focusedProperty().addListener((obs, oldVal, newVal) ->
-//        {
-//            addYseriesComboBox.setVisible(newVal);
-//            addYseriesComboBox.setManaged(newVal);
-//        });
-//        addYseriesComboBox.setOnMouseClicked(event -> {
-//            String File = addYseriesComboBox.getSelectionModel().getSelectedItem();
-//            addYseriesField.setText(File);
-//            addYseriesComboBox.getSelectionModel().clearSelection();
-//        });
+        lineChart.setLegendVisible(false);
+        barChart.setLegendVisible(false);
 
         // using data location
         // searching for available xColumns and yColumns
@@ -79,26 +71,39 @@ public class ControllerOfChartWindow {
     public void addYseries(ActionEvent e) {
         String inputSeriesName = addYseriesComboBox.getEditor().getText();
         if(!availableYseries.contains(inputSeriesName)) return;
-        // using data location
-        ArrayList<String> filePaths = new ArrayList<>(UsefulFunctions.getAllFilePaths());
-        for(var path : filePaths) {
-            addYseriesStaticly(ySeriesSettings, barChart, lineChart, path, addYseriesComboBox.getEditor().getText().split("\\|")[1], chartWindow.toSave);
-        }
+        addYseriesStaticly(chartWindow, inputSeriesName.split("\\|")[0], inputSeriesName.split("\\|")[1], chartWindow.toSave);
     }
 
-    public static void addYseriesStaticly(VBox ySeriesSettings, BarChart barChart, LineChart lineChart, String path, String columnName, StringBuilder toSave) {
+    public static void addYseriesStaticly(ChartWindow chartWindow, String path, String columnName, StringBuilder toSave) {
+        // check unit compatibility
+        String xUnit = UsefulFunctions.getColumnUnit(path, 0);
+        String yUnit = UsefulFunctions.getColumnUnit(path, UsefulFunctions.getColumnIndex(path, columnName)+1);
+        if(!xUnit.equals(chartWindow.xAxisUnit)) {
+            UsefulFunctions.showErrorWindow("Incompatibile X-axis units: required \"" + chartWindow.xAxisUnit + "\" but provided \"" + xUnit + "\"");
+            return;
+        }
+        if(!yUnit.equals(chartWindow.yAxisUnit)) {
+            UsefulFunctions.showErrorWindow("Incompatibile Y-axis units: required \"" + chartWindow.yAxisUnit + "\" but provided \"" + yUnit + "\"");
+            return;
+        }
         //check if already contains this series
-        for(var tmp : UsefulFunctions.loopOverSceneGraph(ySeriesSettings, Label.class)) {
-            if(tmp.getText().equals(columnName)) return;
+        for(var tmp : UsefulFunctions.loopOverSceneGraph(chartWindow.ySeriesSettings, Label.class)) {
+            if(tmp.getText().equals(path+"|"+columnName)) {
+                UsefulFunctions.showErrorWindow("Chart already contains series \"" + path + "|"+ columnName + "\"");
+                return;
+            }
         }
         int columnIndex = UsefulFunctions.getColumnIndex(path, columnName);
-        if(columnIndex < 0) return; // check if specified column exists
-
+        // check if specified column exists
+        if(columnIndex < 0) {
+            UsefulFunctions.showErrorWindow("Column \"" + path + "|" + columnName + "\" does not exist");
+            return;
+        }
         var seriesForBar = Main.getSeries(path, columnIndex);
         var seriesForLine = Main.getSeries(path, columnIndex);
         seriesForLine[0].setName(columnName); seriesForBar[0].setName(columnName);
-        barChart.getData().addAll(seriesForBar);
-        lineChart.getData().addAll(seriesForLine);
+        chartWindow.barChart.getData().addAll(seriesForBar);
+        chartWindow.lineChart.getData().addAll(seriesForLine);
 
         // adding HBox with this series settings controls
         HBox oneSeriesSettings = null;
@@ -110,43 +115,48 @@ public class ControllerOfChartWindow {
         Label seriesLabel = UsefulFunctions.loopOverSceneGraph(oneSeriesSettings, Label.class).get(0);
         ColorPicker seriesColorPicker = UsefulFunctions.loopOverSceneGraph(oneSeriesSettings, ColorPicker.class).get(0);
         ToggleButton showHideButton = UsefulFunctions.loopOverSceneGraph(oneSeriesSettings, ToggleButton.class).get(0);
-        int seriesNumber = ySeriesSettings.getChildren().size()+1;
-        seriesLabel.setText(columnName);
+        int seriesNumber = chartWindow.ySeriesSettings.getChildren().size()+1;
+        seriesLabel.setText(path+"|"+columnName);
 
         seriesColorPicker.setValue(Color.RED);
-        String style = barChart.getStyle() + "CHART_COLOR_" + seriesNumber + ": " + colorFormat(seriesColorPicker.getValue()) + ";";
-        barChart.setStyle(style); lineChart.setStyle(style);
+        String style = chartWindow.barChart.getStyle() + "CHART_COLOR_" + seriesNumber + ": " + colorFormat(seriesColorPicker.getValue()) + ";";
+        chartWindow.barChart.setStyle(style); chartWindow.lineChart.setStyle(style);
+
         seriesColorPicker.valueProperty().addListener((observableValue, color, t1) -> {
-            String[] style1 = barChart.getStyle().split(";");
+            String[] style1 = chartWindow.barChart.getStyle().split(";");
             StringBuilder seriesColor = new StringBuilder(style1[seriesNumber-1]);
             seriesColor.replace(seriesColor.indexOf("#"), seriesColor.length(), colorFormat(t1));
             style1[seriesNumber-1] = seriesColor.toString();
             StringBuilder finalStyle = new StringBuilder();
             for (String value : style1) finalStyle.append(value + ";");
-            barChart.setStyle(finalStyle.toString());
-            lineChart.setStyle(finalStyle.toString());
+            chartWindow.barChart.setStyle(finalStyle.toString());
+            chartWindow.lineChart.setStyle(finalStyle.toString());
         });
 
+        showHideButton.setText("O");
         showHideButton.setOnMouseClicked(mouseEvent -> {
-            for(var tmp : lineChart.getData()) {
+            String seriesName = seriesLabel.getText().split("\\|")[1];
+            for(var tmp : chartWindow.lineChart.getData()) {
                 XYChart.Series series = (XYChart.Series) tmp;
-                if(series.getName().equals(seriesLabel.getText())) {
+                if(series.getName().equals(seriesName)) {
                     series.getNode().setVisible(!showHideButton.isSelected());
                     for(var x : series.getData())
                         ((XYChart.Data)x).getNode().setVisible(!showHideButton.isSelected());
                 }
             }
-            for(var tmp : barChart.getData()) {
+            for(var tmp : chartWindow.barChart.getData()) {
                 XYChart.Series series = (XYChart.Series) tmp;
-                if(series.getName().equals(seriesLabel.getText()))
+                if(series.getName().equals(seriesName))
                     for(var x : series.getData())
                         ((XYChart.Data)x).getNode().setVisible(!showHideButton.isSelected());
             }
+            if(showHideButton.isSelected()) showHideButton.setText("X");
+            else showHideButton.setText("O");
         });
 
 
-        ySeriesSettings.getChildren().add(oneSeriesSettings);
-        if(ySeriesSettings.getChildren().size()>1) {
+        chartWindow.ySeriesSettings.getChildren().add(oneSeriesSettings);
+        if(chartWindow.ySeriesSettings.getChildren().size()>1) {
             toSave.append(path).append(";").append(columnName).append("\n");
         }
     }

@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Menu.ControllerOfChartWindow">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChartManagement.ControllerOfChartWindow">
    <right>
-      <VBox maxWidth="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+      <VBox maxWidth="200.0" minWidth="200.0" prefHeight="200.0" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="CENTER" VBox.vgrow="NEVER">
                <VBox.margin>
@@ -27,12 +27,12 @@
                   <Button fx:id="addYseriesButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addYseries" text="Add Y-series" />
                </children>
             </VBox>
-            <VBox id="ySeriesSettingsVBox" fx:id="ySeriesSettings" prefHeight="351.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
+            <VBox id="ySeriesSettingsVBox" fx:id="ySeriesSettings" prefHeight="351.0" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </VBox>
-            <VBox alignment="BOTTOM_CENTER" maxHeight="214.0" minHeight="0.0" prefHeight="214.0" prefWidth="200.0" VBox.vgrow="NEVER">
+            <VBox alignment="BOTTOM_CENTER" maxHeight="214.0" minHeight="0.0" prefHeight="214.0" VBox.vgrow="NEVER">
                <children>
                   <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#handleSaveButtonPressed" text="Save">
                      <VBox.margin>

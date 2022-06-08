@@ -1,8 +1,8 @@
 package MainMenu;
 
-import Menu.ChartSetUpWindow;
-import Menu.DataViewer;
-import Menu.DiagramWindow;
+import ChartManagement.ChartSetUpWindow;
+import ChartManagement.DataViewer;
+import ChartManagement.DiagramWindow;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

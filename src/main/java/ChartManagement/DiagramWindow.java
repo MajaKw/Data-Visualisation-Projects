@@ -1,4 +1,4 @@
-package Menu;
+package ChartManagement;
 
 import MainMenu.MainMenu;
 import MainMenu.Settings;
@@ -54,13 +54,6 @@ public class DiagramWindow {
         // ** wyszukiwarka krajow
 
 
-//        JMenuBar menu = new JMenuBar();
-
-
-//        Parent root = FXMLLoader.load(getClass().getResource("search.fxml"));
-//        System.out.println(fxmlLoader.getController().toString());
-        // tu problem jest taki ze chcialabym sie dostac do obeiktu Controller i tam ustawic za pomoca funckji odpowiednia sciezke
-        // zeby miec jedna wyszukiwarke dla krajow i kategorii, ale jest z tym jakis problem do zmiany pozniej
 
 
         VBox layout = new VBox();

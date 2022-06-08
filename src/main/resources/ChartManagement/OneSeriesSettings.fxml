@@ -6,16 +6,16 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="175.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" prefHeight="27.0" prefWidth="48.0">
+      <ToggleButton contentDisplay="CENTER" maxWidth="28.0" minWidth="28.0" mnemonicParsing="false" text="O">
          <HBox.margin>
             <Insets bottom="2.0" right="5.0" top="2.0" />
          </HBox.margin></ToggleButton>
-      <ColorPicker />
-      <Label prefHeight="41.0" prefWidth="98.0" text="Label">
+      <ColorPicker maxWidth="30.0" minWidth="30.0" />
+      <Label text="Label">
          <HBox.margin>
-            <Insets bottom="2.0" top="2.0" />
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </HBox.margin></Label>
    </children>
 </HBox>

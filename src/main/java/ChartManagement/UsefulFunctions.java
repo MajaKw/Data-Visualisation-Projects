@@ -1,9 +1,15 @@
-package Menu;
+package ChartManagement;
 
 import MainMenu.MainMenu;
+import MainMenu.Settings;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 
 public class UsefulFunctions {
@@ -92,5 +97,31 @@ public class UsefulFunctions {
         }
 
         return filePaths;
+    }
+
+    public static void showErrorWindow(String errorMessage) {
+        Parent root = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ChartSetUpWindow.class.getResource("ErrorWindow.fxml"));
+            root = fxmlLoader.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Label errorLabel = loopOverSceneGraph(root, Label.class).get(0);
+        errorLabel.setText(errorMessage);
+        errorLabel.setTextFill(Color.RED);
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        if(Settings.isDarkMode){
+            scene.getStylesheets().add("DarkMode.css");
+        }
+        else {
+            scene.getStylesheets().add("LightMode.css");
+        }
+        stage.setScene(scene);
+        stage.setTitle("Error!");
+        stage.setResizable(false);
+        stage.show();
     }
 }

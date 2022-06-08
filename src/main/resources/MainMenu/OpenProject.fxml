@@ -8,7 +8,7 @@
    <top>
       <HBox prefHeight="55.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="toMainMenuButton" mnemonicParsing="false" onAction="#handleToMainMenuButtonPressed" text="Go Back To Main Menu">
+            <Button fx:id="toMainMenuButton" mnemonicParsing="false" onAction="#handleToMainMenuButtonPressed" text="Go Back To Main ChartManagement">
                <HBox.margin>
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>

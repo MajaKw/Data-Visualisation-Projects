@@ -9,11 +9,11 @@ module searchEngine {
     requires com.google.common;
     requires java.prefs;
 
-    exports Menu;
+    exports ChartManagement;
     exports MainMenu;
     exports DataManagement;
 
-    opens Menu to
+    opens ChartManagement to
             javafx.fxml;
     opens MainMenu to
             javafx.fxml;

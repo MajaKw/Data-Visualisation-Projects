@@ -1,4 +1,4 @@
-package Menu;
+package ChartManagement;
 
 import MainMenu.MainMenu;
 import javafx.event.ActionEvent;
