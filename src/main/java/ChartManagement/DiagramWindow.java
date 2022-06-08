@@ -36,6 +36,7 @@ public class DiagramWindow {
     ComboBox<String> comboBox;
     ComboBox<String> comboBox2;
     ComboBox<String> comboBox3;
+    TextField textField3_new = new TextField();
 
 
     String path_format = "%s.%s.%s";
@@ -164,6 +165,12 @@ public class DiagramWindow {
 
     void table_row_save(ObservableList row_data, String file_name){
         try {
+            File directory = new File(MainMenu.pathToWorkingDirectory + "/Uploaded/"+comboBox.getValue());
+            if (! directory.exists()){
+                directory.mkdir();
+                // If you require it to make the entire directory path including parents,
+                // use directory.mkdirs(); here instead.
+            }
             BufferedWriter writer = new BufferedWriter(new FileWriter(MainMenu.pathToWorkingDirectory + "/Uploaded/"+comboBox.getValue()+"/"+file_name.replace("/","").replaceAll("[-+.^:/\\,]","")+".csv", true));
             if (Integer.parseInt(hm.get("X"))<Integer.parseInt(hm.get("Y"))){
                 for (int j=0; j<row_data.size(); j++){
@@ -195,9 +202,43 @@ public class DiagramWindow {
             throw new RuntimeException(e);
         }
     }
+    void save_new_category(String category){
+        try {
+            JSONObject obj = (JSONObject) new JSONParser().parse(new FileReader(MainMenu.pathToWorkingDirectory + "/categories.json"));
+            if(!obj.containsKey(category)){
+                obj.put(category, new ArrayList<String>());
+            }
+            try (PrintWriter out = new PrintWriter(new FileWriter(MainMenu.pathToWorkingDirectory + "/categories.json"))) {
+                out.write(obj.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    ObservableList<String> get_categories(){
+        ObservableList<String> result = FXCollections.observableArrayList();
+        try {
+            JSONObject obj = (JSONObject) new JSONParser().parse(new FileReader(MainMenu.pathToWorkingDirectory + "/categories.json"));
+            obj.keySet().stream().forEach((key) -> result.add((String) key));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
 
     void save_to_json(String filePath, String data, Boolean Cat){
         String category = comboBox.getValue();
+        if (category == null){
+
+        }
         if (Cat){
             String temp = category;
             category = data;
@@ -266,8 +307,11 @@ public class DiagramWindow {
 
         mi1.setOnAction((ActionEvent event) -> {
             System.out.println("W");
-            if (comboBox.getValue() == null || textField2.getText().equals("")){
-                System.out.println("r");
+            if(textField3_new.getText()!=""){
+                comboBox.setValue(textField3_new.getText());
+                save_new_category(textField3_new.getText());
+            };
+            if (comboBox.getValue() == null || textField2.getText().equals("") || comboBox2.getValue() == null || comboBox3.getValue()==null){
                 error.setText("Please fill all of the data");
                 return;
             }
@@ -373,7 +417,7 @@ public class DiagramWindow {
         TextField textField = new TextField();
         vblabel.getChildren().addAll(label1, textField);
         Label label2 = new Label("Add metric name");
-        ObservableList<String> options = FXCollections.observableArrayList();
+        ObservableList<String> options = get_categories();
         ObservableList<String> options2 = FXCollections.observableArrayList();
         options2.add("YEAR");
         options2.add("NUMBER");
@@ -381,24 +425,32 @@ public class DiagramWindow {
         options2.add("LABEL");
         VBox vblabel2 = new VBox();
         VBox vblabel3 = new VBox();
+        VBox vblabel3_new = new VBox();
         VBox vblabel4 = new VBox();
         VBox vblabel5 = new VBox();
         Label label3 = new Label("Categories name");
+        vblabel2.setAlignment(Pos.CENTER);
+        vblabel3.setAlignment(Pos.CENTER);
+        vblabel3_new.setAlignment(Pos.CENTER);
+        vblabel5.setAlignment(Pos.CENTER);
+        vblabel4.setAlignment(Pos.CENTER);
+        Label label3_new = new Label("New category name");
+
         Label label4 = new Label("X unit: ");
+        label4.setAlignment(Pos.CENTER);
         Label label5 = new Label("Y unit: ");
         vblabel2.getChildren().addAll(label2, textField2);
-        options.add("countries");
-        options.add("currency");
         comboBox = new ComboBox(options);
         comboBox2 = new ComboBox(options2);
         comboBox3 = new ComboBox(options2);
         vblabel3.getChildren().addAll(label3, comboBox);
+        vblabel3_new.getChildren().addAll(label3_new, textField3_new);
         vblabel4.getChildren().addAll(label4, comboBox2);
         vblabel5.getChildren().addAll(label5, comboBox3);
         textField.setText("File");
         Button button = new Button("Save the file");
         button.setOnAction(actionEvents ->  {
-            if (comboBox.getValue() == null || textField2.getText().equals("")){
+            if (comboBox.getValue() == null || textField2.getText().equals("") || comboBox2.getValue() == null || comboBox3.getValue()==null){
                 error.setText("Please fill all of the data");
                 return;
             }
@@ -426,7 +478,7 @@ public class DiagramWindow {
             window.close();
         });
 
-        settings.getChildren().addAll(vblabel,vblabel2,vblabel3,vblabel4,vblabel5);
+        settings.getChildren().addAll(vblabel2,vblabel3, vblabel3_new,vblabel4,vblabel5);
         layout_content.getChildren().add(settings);
         myReader.close();
         return separator;
