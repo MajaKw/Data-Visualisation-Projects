@@ -1,10 +1,16 @@
 # Data-Visualisation-Project
 Already made functionalities:
-- autocomplete text field,
-- 2 plots (BarChart, LineChart)
-- functionality thanks to which plot ocuurs after choosing data for x and y-axis
-- parsing data from .csv file, possibility to change automatically found delimiter
+- autocomplete text fields
+- parsing data from .csv file (possibility to change automatically found delimiter)
 - automatic deletion of useless columns in csv file while parsing
-- working main menu
-- dark/light mode
+- creating chart from Uploaded data
+- adding multiple Y-series
+- changing color and visibility of Y-series
 - saving charts
+- possibility to change working directory 
+- dark/light mode
+
+Authors:
+- Maja Kwiatek (33%)
+- Mikołaj Kot (33%)
+- Beniamin Śniegowski (33%)
