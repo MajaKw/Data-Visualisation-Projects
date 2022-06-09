@@ -66,3 +66,7 @@
 -fx-background-color:#e4d9ff;
 -fx-text-fill: #273469;
 }
+
+.combo-box .list-cell{
+-fx-text-fill: #1e2749;
+}
