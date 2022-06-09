@@ -108,7 +108,7 @@ public class ControllerOfChartWindow {
         // adding HBox with this series settings controls
         HBox oneSeriesSettings = null;
         try{
-            oneSeriesSettings = FXMLLoader.load(ChartSetUpWindow.class.getResource("oneSeriesSettings.fxml"));
+            oneSeriesSettings = FXMLLoader.load(ChartSetUpWindow.class.getResource("OneSeriesSettings.fxml"));
         } catch(Exception ex) {
             ex.printStackTrace();
         }

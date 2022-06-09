@@ -25,10 +25,6 @@
 #titleLabel{
     -fx-text-fill: #415a77;
 }
-#data{
-    -fx-padding: 5;
-}
-
 .menu-item{
     -fx-background-color: #1b263b;
 }

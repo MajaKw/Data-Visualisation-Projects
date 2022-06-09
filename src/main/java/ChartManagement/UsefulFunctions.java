@@ -87,8 +87,8 @@ public class UsefulFunctions {
             ).forEach((s) -> {
                 StringBuilder sb = new StringBuilder(s.toString());
                 if(sb.substring(sb.length()-4, sb.length()).equals(".csv")) {
-//                    System.out.println(sb);
-                    String st = sb.substring(sb.indexOf("Uploaded\\")+"Uploaded\\".length(), sb.length());
+                    sb = new StringBuilder(sb.toString().replace("\\","/"));
+                    String st = sb.substring(sb.indexOf("Uploaded/")+"Uploaded/".length(), sb.length());
                     filePaths.add(st);
                 }
             });
