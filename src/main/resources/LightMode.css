@@ -67,6 +67,17 @@
 -fx-text-fill: #273469;
 }
 
+.text-area{
+    -fx-text-fill: #273469;
+
+}
+
+.text-area .content{
+    -fx-background-color: #e4d9ff;
+
+    /*-fx-padding: 5;*/
+}
+
 .combo-box .list-cell{
 -fx-text-fill: #1e2749;
 }

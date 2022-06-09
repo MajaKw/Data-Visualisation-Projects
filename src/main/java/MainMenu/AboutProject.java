@@ -7,12 +7,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class AboutProject {
+
 
     void show(Stage stage){
         Parent root = null;
@@ -21,7 +23,6 @@ public class AboutProject {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         Scene scene = new Scene(root,600,400);
         if(Settings.isDarkMode){

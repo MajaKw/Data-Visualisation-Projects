@@ -85,6 +85,17 @@
     /*-fx-padding: 5;*/
 }
 
+.text-area{
+    -fx-text-fill: #e0e1dd;
+
+}
+
+.text-area .content{
+    -fx-background-color: #1b263b;
+
+    /*-fx-padding: 5;*/
+}
+
 .radio-button{
     -fx-text-fill: #e0e1dd;
     -fx-mark-color: #415a77 ;
