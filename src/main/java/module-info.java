@@ -7,15 +7,13 @@ module searchEngine {
     requires java.sql;
     requires java.desktop;
     requires com.google.common;
+    requires java.prefs;
 
-    exports Menu;
+    exports ChartManagement;
     exports MainMenu;
-    exports searchEngine;
     exports DataManagement;
 
-    opens Menu to
-            javafx.fxml;
-    opens searchEngine to
+    opens ChartManagement to
             javafx.fxml;
     opens MainMenu to
             javafx.fxml;

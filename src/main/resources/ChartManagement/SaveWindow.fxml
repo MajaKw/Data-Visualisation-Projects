@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="168.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ChartManagement.SaveWindowController">
+   <children>
+      <Button fx:id="GoBackButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleGoBackButtonPressed" text="Go Back" />
+      <TextField fx:id="name" layoutX="40.0" layoutY="72.0"  />
+      <Button fx:id="SaveButton" layoutX="195.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleSaveButtonPressed" text="Save" />
+      <Label fx:id="error" layoutX="40.0" layoutY="115.0" style="-fx-text-fill: red;" />
+   </children>
+</AnchorPane>

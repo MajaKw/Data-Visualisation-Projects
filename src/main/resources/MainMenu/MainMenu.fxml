@@ -6,74 +6,101 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainMenu.MainMenu">
-   <children>
-      <HBox layoutX="144.0" layoutY="14.0" prefHeight="47.0" prefWidth="337.0">
+<BorderPane minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainMenu.MainMenu">
+   <top>
+      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="titleLabel" prefHeight="47.0" prefWidth="400.0" text="DATA VISUALISATION" textAlignment="CENTER">
+            <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="130.0" text="DATA VISUALISATION" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="32.0" />
-               </font></Label>
-         </children>
-      </HBox>
-      <VBox layoutX="213.0" layoutY="100.0" prefHeight="265.0" prefWidth="200.0">
+               </font>
+            </Label>
+         </children></HBox>
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="356.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="toNewProjectButton" mnemonicParsing="false" onAction="#handleNewProjectButtonPressed" prefHeight="45.0" prefWidth="200.0" text="New Project">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="toOpenProjectButton" mnemonicParsing="false" onAction="#handleOpenProjectButtonPressed" prefHeight="45.0" prefWidth="200.0" text="Open Project">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="toImportDataButton" mnemonicParsing="false" onAction="#handleImportDataButtonPressed" prefHeight="45.0" prefWidth="200.0" text="Import Data">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="toSetingsButton" mnemonicParsing="false" onAction="#handleSettingsButtonPressed" prefHeight="45.0" prefWidth="200.0" text="Settings">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="toAboutProjectButton" mnemonicParsing="false" onAction="#handleAboutProjectButtonPressed" prefHeight="45.0" prefWidth="200.0" text="About Project">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+            <VBox alignment="CENTER" prefHeight="369.0" prefWidth="600.0">
+               <children>
+                  <Button fx:id="toNewProjectButton" mnemonicParsing="false" onAction="#handleNewProjectButtonPressed" prefHeight="45.0" prefWidth="200.0" text="New Project">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="toOpenProjectButton" mnemonicParsing="false" onAction="#handleOpenProjectButtonPressed" prefHeight="45.0" prefWidth="200.0" text="Open Project">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <HBox fx:id="data" alignment="CENTER">
+                     <children>
+                     <Button fx:id="toImportDataButton" mnemonicParsing="false" onAction="#handleImportDataButtonPressed" prefHeight="45.0" prefWidth="99.0" text="Import">
+                        <font>
+                           <Font size="15.0" />
+                        </font>
+                        <VBox.margin>
+                           <Insets top="5.0" />
+                        </VBox.margin>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                           <HBox.margin>
+                              <Insets right="1.0" top="5.0" />
+                           </HBox.margin>
+                  </Button>
+                        <Button fx:id="toViewDataButton" mnemonicParsing="false" onAction="#handleViewerDataButtonPressed" prefHeight="45.0" prefWidth="99.0" text="View">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets left="1.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button fx:id="toSetingsButton" mnemonicParsing="false" onAction="#handleSettingsButtonPressed" prefHeight="45.0" prefWidth="200.0" text="Settings">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="toAboutProjectButton" mnemonicParsing="false" onAction="#handleAboutProjectButtonPressed" prefHeight="45.0" prefWidth="200.0" text="About Project">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </VBox>
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>
